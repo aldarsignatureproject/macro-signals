@@ -6,60 +6,36 @@
 <title>Aldar Macro Signals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   color-scheme: light;
-  --page:#f3f4f7; --card:#ffffff; --raised:#f7f8fa;
+  --page:#f7f8fa; --card:#ffffff; --raised:#f7f8fa;
   --ink:#0d1b36; --ink2:#4a5468; --muted:#7d8597;
   --grid:#e6e8ee; --axis:#c4c9d3; --border:rgba(13,27,54,.09);
-  --header:#0b1f45; --header-ink:#ffffff; --header-ink2:#aab6cf;
+  --header:#ffffff; --header-ink:#0d1b36; --header-ink2:#7d8597;
   --accent:#2a78d6; --accent-wash:rgba(42,120,214,.09);
   --up:#d6453f; --down:#2a78d6; --mid:#eceef2; --priced:#c4c9d3;
   --good:#0ca30c; --good-text:#00731a; --warn:#fab219; --crit:#d03b3b;
   --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300;
-  --shadow:0 1px 2px rgba(13,27,54,.05), 0 6px 20px rgba(13,27,54,.05);
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme: dark;
-    --page:#0b0e15; --card:#141923; --raised:#1a202c;
-    --ink:#f2f4f8; --ink2:#b7bfcd; --muted:#808899;
-    --grid:#232a37; --axis:#3a4354; --border:rgba(255,255,255,.08);
-    --header:#0b1f45; --accent:#3987e5; --accent-wash:rgba(57,135,229,.14);
-    --up:#e66767; --down:#3987e5; --mid:#283040; --priced:#4a5366;
-    --good-text:#2fc24a;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300;
-    --shadow:none;
-  }
-}
-:root[data-theme="dark"]{
-  color-scheme: dark;
-  --page:#0b0e15; --card:#141923; --raised:#1a202c;
-  --ink:#f2f4f8; --ink2:#b7bfcd; --muted:#808899;
-  --grid:#232a37; --axis:#3a4354; --border:rgba(255,255,255,.08);
-  --header:#0b1f45; --accent:#3987e5; --accent-wash:rgba(57,135,229,.14);
-  --up:#e66767; --down:#3987e5; --mid:#283040; --priced:#4a5366;
-  --good-text:#2fc24a;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300;
   --shadow:none;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--page);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+body{margin:0;background:var(--page);color:var(--ink);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
 a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
 .wrap{max-width:1280px;margin:0 auto;padding:0 24px}
 @media (max-width:640px){.wrap{padding:0 16px}}
 
 /* header */
-header.top{background:var(--header);color:var(--header-ink)}
-header.top .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+header.top{background:var(--header);color:var(--header-ink);border-bottom:1px solid var(--border)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-top:20px;padding-bottom:16px;flex-wrap:wrap}
 .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--header-ink2);font-weight:600}
-h1{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:32px;line-height:1.1;margin:4px 0 0;letter-spacing:-.01em}
+h1{font-weight:700;font-size:24px;line-height:1.2;margin:2px 0 0;letter-spacing:-.02em}
 .meta{text-align:right;font-size:13px;color:var(--header-ink2)}
 .meta strong{color:var(--header-ink);font-weight:600;display:block;font-size:14px}
-.pill{display:inline-block;margin-top:6px;padding:2px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.25);font-size:11px;letter-spacing:.04em;color:var(--header-ink)}
-nav.tabs{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5}
+.pill{display:inline-block;margin-top:6px;padding:2px 10px;border-radius:999px;background:var(--raised);border:1px solid var(--border);font-size:11px;font-weight:500;color:var(--ink2)}
+nav.tabs{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5}
 nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
 nav.tabs button{appearance:none;border:0;background:none;color:var(--ink2);font:inherit;font-weight:600;padding:14px 14px 12px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
 nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
@@ -68,13 +44,13 @@ nav.tabs button:hover{color:var(--ink)}
 .synthetic b{color:var(--ink2)}
 
 /* layout */
-main{padding:16px 0 48px}
-.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+main{padding:20px 0 56px}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px}
 .c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}.c3{grid-column:span 3}
 @media (max-width:980px){.c8,.c7,.c6,.c5,.c4{grid-column:span 12}.c3{grid-column:span 6}}
 @media (max-width:520px){.c3{grid-column:span 12}}
-.stack{display:flex;flex-direction:column;gap:16px;min-width:0}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:20px;min-width:0}
+.stack{display:flex;flex-direction:column;gap:20px;min-width:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:24px;min-width:0}
 .card h2{font-size:15px;margin:0;font-weight:650;letter-spacing:-.005em}
 .card .sub{font-size:12.5px;color:var(--muted);margin:2px 0 14px}
 .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
@@ -84,26 +60,17 @@ section[hidden]{display:none}
 .hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px}
 @media (max-width:980px){.hero{grid-template-columns:1fr}}
 .kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:650}
-.hero-num{font-size:56px;font-weight:650;letter-spacing:-.03em;line-height:1;margin:10px 0 4px}
+.hero-num{font-size:56px;font-weight:600;letter-spacing:-.03em;line-height:1;margin:10px 0 4px}
 .hero-num small{font-size:20px;font-weight:600;color:var(--ink2);letter-spacing:0;margin-left:4px}
 .hero-cap{color:var(--ink2);font-size:13px}
 .read{font-size:15px;line-height:1.6;margin:16px 0 0;color:var(--ink)}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
-.tile{background:var(--raised);border-radius:10px;padding:14px}
+.tile{border:1px solid var(--grid);border-radius:10px;padding:14px}
 .tile .lbl{font-size:12px;color:var(--ink2)}
 .tile .val{font-size:24px;font-weight:650;letter-spacing:-.02em;margin-top:4px;line-height:1.15}
 .tile .dl{font-size:12px;color:var(--muted);margin-top:2px}
 .meter{height:6px;border-radius:3px;background:var(--accent-wash);margin-top:8px;overflow:hidden}
 .meter i{display:block;height:100%;background:var(--accent);border-radius:3px}
-
-/* pipeline */
-.pipe{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative}
-@media (max-width:720px){.pipe{grid-template-columns:1fr 1fr;row-gap:14px}}
-.step{padding:4px 18px 4px 0;position:relative}
-.step:not(:last-child)::after{content:"";position:absolute;right:10px;top:22px;width:8px;height:8px;border-top:1.5px solid var(--axis);border-right:1.5px solid var(--axis);transform:rotate(45deg)}
-.step .n{font-size:26px;font-weight:650;letter-spacing:-.02em}
-.step .t{font-size:12.5px;color:var(--ink2);line-height:1.35}
-.step .bar{height:4px;border-radius:2px;background:var(--accent);margin:6px 0 8px;opacity:.85}
 
 /* curve chart + legends */
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2)}
@@ -112,7 +79,7 @@ section[hidden]{display:none}
 .ln{width:14px;height:2px;border-radius:1px;display:inline-block}
 .chart{width:100%;position:relative}
 .chart svg{display:block;overflow:visible}
-.chart text{font:11px system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--muted);font-variant-numeric:tabular-nums}
+.chart text{font:11px Inter,system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--muted);font-variant-numeric:tabular-nums}
 .chart text.v{fill:var(--ink2);font-weight:600}
 .hit{fill:transparent;cursor:default}
 .hit:hover{fill:var(--accent-wash)}
@@ -139,8 +106,9 @@ th:first-child,td:first-child{text-align:left}
 .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
 
 /* signal items */
-.item{border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:12px;background:var(--card)}
-.item.alert{border-left:3px solid var(--up)}
+.item{border-top:1px solid var(--grid);padding:20px 0 18px}
+.item:first-child{border-top:0}
+#feed{margin-top:8px}
 .item-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .tags{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
 .tag{display:inline-flex;align-items:center;gap:6px;color:var(--ink2);font-weight:600}
@@ -158,19 +126,20 @@ th:first-child,td:first-child{text-align:left}
 .alert .sbar i{background:var(--up)}
 .sbar u{position:absolute;top:-3px;bottom:-3px;width:1.5px;background:var(--ink);left:70%}
 .strip{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:2px;margin:12px 0 4px}
-.strip div{border-radius:5px;padding:5px 0 4px;text-align:center;font-size:12px;font-weight:650;font-variant-numeric:tabular-nums}
+.strip div{border-radius:4px;padding:4px 0 3px;text-align:center;font-size:12px;font-weight:650;font-variant-numeric:tabular-nums}
 .strip div span{display:block;font-size:10px;font-weight:500;opacity:.75}
 .spread{display:flex;align-items:center;gap:10px;margin:12px 0 4px;padding:8px 12px;border-radius:8px;background:var(--raised);font-size:13px}
 .spread b{font-size:16px}
-.check{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--ink2);margin-top:8px}
+.check{display:flex;gap:8px;align-items:baseline;font-size:13px;color:var(--ink2)}
 .check i{font-style:normal;font-weight:700;font-size:11px;padding:1px 7px;border-radius:5px;border:1px solid var(--border);color:var(--ink)}
-.item details{margin-top:10px;border-top:1px solid var(--grid);padding-top:8px}
+.item-foot{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:10px;flex-wrap:wrap}
+.item details{flex:1;min-width:220px}
 .item summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--ink2)}
 .why{font-size:13px;color:var(--ink2);margin-top:8px;display:grid;gap:8px}
 .why .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:650;display:block}
 .cite{font-size:12px;color:var(--muted)}
-.fb{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
-.fb button{appearance:none;font:inherit;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--ink2);cursor:pointer}
+.fb{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.fb button{appearance:none;font:inherit;font-size:12px;font-weight:500;padding:4px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--ink2);cursor:pointer}
 .fb button:hover{border-color:var(--accent);color:var(--accent)}
 .fb button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
 .fb .note{font-size:12px;color:var(--muted)}
@@ -257,52 +226,31 @@ footer{font-size:12px;color:var(--muted);padding:0 0 32px}
       </div>
 
       <div class="card c12">
-        <div class="card-head"><div><h2>Today's pipeline</h2><div class="sub">From raw news to items worth your time</div></div></div>
-        <div class="pipe" id="pipe"></div>
-      </div>
-
-      <div class="card c8">
         <div class="card-head">
-          <div><h2>Expected move across the curve</h2><div class="sub">Next 5 trading days, bp. The gap between the bars is information the market has not priced yet.</div></div>
-          <div class="legend"><span><i class="sw" style="background:var(--priced)"></i>Priced in (SOFR futures / OIS)</span><span><i class="sw" style="background:var(--up)"></i>Platform view, up</span><span><i class="sw" style="background:var(--down)"></i>Platform view, down</span></div>
+          <div><h2>Expected move across the curve</h2><div class="sub">Next 5 trading days, bp. The gap between the bars is what the market has not priced yet.</div></div>
+          <div class="legend"><span><i class="sw" style="background:var(--priced)"></i>Priced in (SOFR futures / OIS)</span><span><i class="sw" style="background:var(--accent)"></i>Platform view</span></div>
         </div>
         <div class="chart" id="curveChart"></div>
-        <div class="kicker" style="margin-top:14px">Not yet priced, bp</div><div class="strip" id="gapStrip"></div>
-        <div class="note-s" style="margin-top:6px">The market check keeps an item only if it adds to what SOFR futures and OIS already imply. The short end carries most of today's new information.</div>
         <details class="tbl"><summary>Show as table</summary><div class="scroll" id="curveTable"></div></details>
       </div>
 
-      <div class="card c4">
-        <h2>Suggested actions</h2>
-        <div class="sub">For review by FRM and the Head of Treasury</div>
-        <div id="actions"></div>
-      </div>
-
-      <div class="c8 stack">
-        <div class="card">
-          <div class="card-head">
-            <div><h2>Signals</h2><div class="sub">Ranked by score. Items scoring 70 or more trigger an alert.</div></div>
-          </div>
-          <div class="filters" id="filters"></div>
-          <div id="feed"></div>
-        </div>
+      <div class="card c8">
+        <h2>Signals</h2>
+        <div class="sub" id="feedSub"></div>
+        <div class="filters" id="filters"></div>
+        <div id="feed"></div>
       </div>
 
       <div class="c4 stack">
         <div class="card">
+          <h2>Suggested actions</h2>
+          <div class="sub">For review by FRM and the Head of Treasury</div>
+          <div id="actions"></div>
+        </div>
+        <div class="card">
           <h2>Market snapshot</h2>
           <div class="sub">Close 30 Sep, change on the day, 20-day trend</div>
           <div class="mkt" id="mkt"></div>
-        </div>
-        <div class="card">
-          <h2>What actually moves Aldar's curve</h2>
-          <div class="sub">Average move at the most affected tenor in the 5 days after a scored item, last 12 months. These are the scoring weights.</div>
-          <div class="hb" id="weights"></div>
-        </div>
-        <div class="card">
-          <h2>Feedback this week</h2>
-          <div class="sub">Treasury ratings feed back into the scoring each day</div>
-          <div class="tiles" id="fbTiles"></div>
         </div>
       </div>
     </div>
@@ -368,7 +316,13 @@ footer{font-size:12px;color:var(--muted);padding:0 0 32px}
         <div class="note-s">UAE-specific moves are those driven by CBUAE liquidity or the EIBOR–SOFR spread. These are where the client expects the platform to add most.</div>
       </div>
 
-      <div class="card c12">
+      <div class="card c6">
+        <h2>What moves Aldar's curve</h2>
+        <div class="sub">Average move at the most affected tenor in the 5 days after a scored item, last 12 months. These measured moves set the scoring weights.</div>
+        <div class="hb" id="weights"></div>
+      </div>
+
+      <div class="card c6">
         <h2>Every material move</h2>
         <div class="sub" id="epSub"></div>
         <div class="scroll" id="epTable"></div>
@@ -531,35 +485,29 @@ function renderToday() {
     ['False alarms this week', `${fpUsed} of 10`, `<div class="meter"><i style="width:${fpUsed * 10}%"></i></div>`],
   ].map(([l, v, d]) => `<div class="tile"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div></div>`).join('');
 
-  const P = [[41, 'items scanned from news wires, central banks, five bank research portals and Aldar & peer disclosures'],
-             [15, 'scored as relevant to Aldar’s curve or credit'],
-             [ITEMS.length, 'carry information the market has not fully priced'],
-             [alerts, 'scored above the alert threshold']];
-  $('#pipe').innerHTML = P.map(([n, t]) => `<div class="step"><div class="n">${n}</div><div class="bar" style="width:${Math.max(6, n / 41 * 100)}%"></div><div class="t">${t}</div></div>`).join('');
-
-  renderActions(); renderFilters(); renderFeed(); renderMarket(); renderWeights(); renderFb(); renderCurve();
+  $('#feedSub').textContent = `41 items scanned, ${ITEMS.length} kept after the market check, ${alerts} above the alert threshold of ${ALERT}.`;
+  renderActions(); renderFilters(); renderFeed(); renderMarket(); renderCurve();
 }
 
 function renderCurve() {
-  const el = $('#curveChart'), w = W(el), h = 270, m = { l: 34, r: 8, t: 18, b: 26 };
+  const el = $('#curveChart'), w = W(el), h = 230, m = { l: 34, r: 8, t: 18, b: 26 };
   const vals = NET.concat(IMPLIED), hi = Math.max(5, ...vals), lo = Math.min(0, ...vals);
   const step = niceStep(hi - lo), yMax = Math.ceil(hi / step) * step, yMin = Math.floor(lo / step) * step;
   const y = v => m.t + (yMax - v) / (yMax - yMin) * (h - m.t - m.b);
-  const band = (w - m.l - m.r) / TENORS.length, bw = Math.min(20, band * 0.28);
+  const band = (w - m.l - m.r) / TENORS.length, bw = Math.min(22, band * 0.22);
   let g = '';
   for (let v = yMin; v <= yMax; v += step) g += `<line x1="${m.l}" x2="${w - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 0 ? 'var(--axis)' : 'var(--grid)'}"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
   TENORS.forEach((t, i) => {
     const cx = m.l + band * i + band / 2, x0 = cx - bw - 1, x1 = cx + 1, net = NET[i], imp = IMPLIED[i];
     const gap = net - imp;
     g += `<path d="${barPath(x0, y(0), y(imp), bw)}" fill="var(--priced)"/>`;
-    g += `<path d="${barPath(x1, y(0), y(net), bw)}" fill="${net >= 0 ? 'var(--up)' : 'var(--down)'}"/>`;
+    g += `<path d="${barPath(x1, y(0), y(net), bw)}" fill="var(--accent)"/>`;
     g += `<text class="v" x="${x1 + bw / 2}" y="${net >= 0 ? y(net) - 6 : y(net) + 14}" text-anchor="middle">${bp(net)}</text>`;
     g += `<text x="${cx}" y="${h - 6}" text-anchor="middle">${t}</text>`;
     const tipHtml = `<b>${t}</b><br><b>${bp(net)}bp</b> <span class="m">platform view</span><br><b>${bp(imp)}bp</b> <span class="m">priced in</span><br><b>${bp(gap)}bp</b> <span class="m">not yet priced</span>`;
     g += `<rect class="hit" x="${m.l + band * i + 2}" y="${m.t}" width="${band - 4}" height="${h - m.t - m.b}" rx="6" data-tip="${esc(tipHtml)}" tabindex="0"/>`;
   });
   el.innerHTML = `<svg width="${w}" height="${h}" role="img" aria-label="Expected move by tenor">${g}</svg>`;
-  $('#gapStrip').innerHTML = NET.map((v, i) => { const d = v - IMPLIED[i], c = cellColor(d); return `<div style="background:${c.bg};color:${c.fg}">${bp(d)}<span>${TENORS[i]}</span></div>`; }).join('');
   $('#curveTable').innerHTML = `<table><tr><th>Tenor</th>${TENORS.map(t => `<th>${t}</th>`).join('')}</tr>
     <tr><td>Platform view</td>${NET.map(v => `<td>${bp(v)}</td>`).join('')}</tr>
     <tr><td>Priced in</td>${IMPLIED.map(v => `<td>${bp(v)}</td>`).join('')}</tr>
@@ -585,28 +533,29 @@ function renderFeed() {
     const strip = it.move
       ? `<div class="strip">${it.move.map((v, i) => { const c = cellColor(v); return `<div style="background:${c.bg};color:${c.fg}" data-tip="${esc(`<b>${bp(v)}bp</b> <span class="m">at ${TENORS[i]}</span>`)}">${bp(v)}<span>${TENORS[i]}</span></div>`; }).join('')}</div>`
       : `<div class="spread"><span>Aldar credit spread</span><b>${bp(it.spread)}bp</b><span class="m" style="color:var(--muted)">expected over 5 days · no direct effect on the base curve</span></div>`;
-    return `<article class="item${alert ? ' alert' : ''}">
+    return `<article class="item">
       <div class="item-top">
         <div>
           <div class="tags">${alert ? '<span class="badge">Alert</span>' : ''}<span class="tag"><i class="dot" style="background:${DRIVERS[it.driver]}"></i>${it.driver}</span><span>${it.time}</span></div>
           <h3><a href="${it.url}" target="_blank" rel="noopener">${it.title}</a></h3>
         </div>
-        <div class="score"><div class="s">${it.score}<small> /100</small></div><div class="sbar" title="Alert threshold 70"><i style="width:${it.score}%"></i><u></u></div></div>
+        <div class="score"><div class="s">${it.score}<small> /100</small></div><div class="sbar" title="Alert threshold ${ALERT}"><i style="width:${it.score}%"></i><u></u></div></div>
       </div>
       <p>${it.summary}</p>
       <p class="impl"><b>For Aldar:</b> ${it.impl}</p>
       ${strip}
-      <div class="check"><i>${it.check[0]}</i>${it.check[1]}</div>
-      <details><summary>Why it scored ${it.score}</summary>
-        <div class="why"><div>${it.why}</div><div class="cite"><span class="k">Source</span><a href="${it.url}" target="_blank" rel="noopener">${it.cite}</a> · ${it.source}</div></div>
-      </details>
-      <div class="fb"><button data-fb="${it.id}" data-v="up" aria-pressed="${fb === 'up'}">Useful</button><button data-fb="${it.id}" data-v="down" aria-pressed="${fb === 'down'}">Not useful</button><span class="note">${fb ? 'Thanks. This feeds tomorrow’s scoring.' : ''}</span></div>
+      <div class="item-foot">
+        <details><summary>Why it scored ${it.score}</summary>
+          <div class="why"><div class="check"><i>${it.check[0]}</i>${it.check[1]}</div><div>${it.why}</div><div class="cite"><span class="k">Source</span><a href="${it.url}" target="_blank" rel="noopener">${it.cite}</a> · ${it.source}</div></div>
+        </details>
+        <div class="fb">${fb ? '<span class="note">Thanks, noted</span>' : ''}<button data-fb="${it.id}" data-v="up" aria-pressed="${fb === 'up'}">Useful</button><button data-fb="${it.id}" data-v="down" aria-pressed="${fb === 'down'}">Not useful</button></div>
+      </div>
     </article>`;
   }).join('') : '<div class="empty">No items match this filter today.</div>';
 }
 $('#feed').addEventListener('click', e => {
   const b = e.target.closest('[data-fb]'); if (!b) return;
-  const k = 'fb:' + b.dataset.fb; store.set(k, store.get(k) === b.dataset.v ? null : b.dataset.v); renderFeed(); renderFb();
+  const k = 'fb:' + b.dataset.fb; store.set(k, store.get(k) === b.dataset.v ? null : b.dataset.v); renderFeed();
 });
 
 function spark(vals, w = 260, h = 22) {
@@ -620,17 +569,6 @@ function renderWeights() {
   const max = WEIGHTS[0][1];
   $('#weights').innerHTML = WEIGHTS.map(([d, v]) => `<span class="nm"><i class="dot" style="background:${DRIVERS[d]}"></i>${d === 'Aldar & peer credit' ? 'Credit' : d}</span><span class="tr" data-tip="${esc(`<b>${v.toFixed(1)}bp</b> <span class="m">average move after a ${d} item</span>`)}"><i style="width:${v / max * 100}%"></i></span><span class="vv">${v.toFixed(1)}bp</span>`).join('');
 }
-function renderFb() {
-  const mine = ITEMS.map(i => store.get('fb:' + i.id)).filter(Boolean);
-  const rated = 26 + mine.length, useful = 20 + mine.filter(v => v === 'up').length;
-  $('#fbTiles').innerHTML = [
-    ['Items rated', rated, 'Since Monday'],
-    ['Rated useful', `${Math.round(useful / rated * 100)}%`, `${useful} of ${rated}`],
-    ['Missed moves reported', 0, 'Moves treasury saw that the platform did not flag'],
-    ['Scoring updates', 3, 'Weight changes from feedback'],
-  ].map(([l, v, d]) => `<div class="tile"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div></div>`).join('');
-}
-
 /* ---------- EXPOSURE ---------- */
 const LADDER = [['2026', [1.0, 0, 0]], ['2027', [0.7, 0, 0]], ['2028', [2.5, 0, 0]], ['2029', [5.0, 1.8, 0]], ['2030', [2.8, 0, 0]], ['2031+', [0.1, 6.6, 12.9]]];
 const LSER = ['Bank debt', 'Senior public debt', 'Hybrid notes'];
@@ -642,8 +580,7 @@ function renderExposure() {
     ['Floating debt', 'AED 25.0bn', '75% of gross debt (client assumption)'],
     ['Cash, floating', 'AED 22.7bn', 'Earns floating rates, offsets most of a 3M move'],
     ['Net floating exposure', 'AED 2.3bn', `+1bp on 3M ≈ ${aed(perBp.debt - perBp.cash)}m a year, net`],
-    ['Due in 2029', 'AED 6.8bn', 'Bank 5.0 · senior public 1.8'],
-  ].map(([l, v, d]) => `<div class="tile" style="background:var(--card);border:1px solid var(--border)"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div></div>`).join('');
+  ].map(([l, v, d]) => `<div class="tile" style="background:var(--card)"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div></div>`).join('');
   updateSliders(); renderLadder(); renderScen();
 }
 const cls = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
@@ -730,14 +667,14 @@ function renderBacktest() {
     ['Median lead time', `${lead} days`, 'Before the move began', ok(lead >= 1 && lead <= 3, 'Target 1 to 3 days')],
     ['False alarms per week', fpAvg.toFixed(1), `Worst week: ${fpMax}`, ok(fpMax <= 10, 'Cap 10 a week')],
   ].map(([l, v, d, s]) => `<div class="tile"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div>${s}</div>`).join('');
-  renderBtChart(eps); renderFp();
+  renderBtChart(eps); renderFp(); renderWeights();
   const fut = eps.filter(e => e.fut);
   const pct = (a, b) => b ? `${Math.round(a / b * 100)}% <span style="color:var(--muted)">(${a}/${b})</span>` : '—';
   $('#bench').innerHTML = `<table><tr><th></th><th>All moves</th><th>UAE-specific</th><th>Median lead</th></tr>
     <tr><td><b>Macro Signals</b></td><td>${pct(hits.length, eps.length)}</td><td>${pct(uae.filter(e => e.hit).length, uae.length)}</td><td>${lead} days</td></tr>
     <tr><td>Futures &amp; OIS only</td><td>${pct(fut.length, eps.length)}</td><td>${pct(0, uae.length)}</td><td>1 day</td></tr></table>`;
   $('#epSub').textContent = `${eps.length} moves of more than 25bp in 5 trading days on ${tenor === 'eibor' ? '3M EIBOR' : 'the 10Y'} during 2022`;
-  $('#epTable').innerHTML = `<table><tr><th>Move began</th><th>5-day move</th><th>Main driver</th><th>Flagged</th><th>Lead</th><th>Futures-only rule</th></tr>${eps.map(e => `<tr><td>${fmtD(DAYS[e.i])}</td><td>${bp(Math.round(e.mv * 100))}bp</td><td style="text-align:right">${e.driver}</td><td>${e.hit ? '<span style="color:var(--good-text)">✓ Yes</span>' : '<span style="color:var(--crit)">✕ Missed</span>'}</td><td>${e.hit ? e.lead + (e.lead > 1 ? ' days' : ' day') : '—'}</td><td>${e.fut ? '✓' : '✕'}</td></tr>`).join('')}</table>`;
+  $('#epTable').innerHTML = `<table><tr><th>Move began</th><th>5-day move</th><th>Main driver</th><th>Flagged</th><th>Lead</th></tr>${eps.map(e => `<tr><td>${fmtD(DAYS[e.i])}</td><td>${bp(Math.round(e.mv * 100))}bp</td><td style="text-align:right">${e.driver}</td><td>${e.hit ? '<span style="color:var(--good-text)">✓ Yes</span>' : '<span style="color:var(--crit)">✕ Missed</span>'}</td><td>${e.hit ? e.lead + (e.lead > 1 ? ' days' : ' day') : '—'}</td></tr>`).join('')}</table>`;
 }
 function renderBtChart(eps) {
   const el = $('#btChart'), s = SERIES[tenor], w = W(el), h = 300, m = { l: 40, r: 10, t: 12, b: 26 };
