@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aldar Macro Signals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --page:#f3f4f7; --card:#ffffff; --raised:#f7f8fa;
+  --ink:#0d1b36; --ink2:#4a5468; --muted:#7d8597;
+  --grid:#e6e8ee; --axis:#c4c9d3; --border:rgba(13,27,54,.09);
+  --header:#0b1f45; --header-ink:#ffffff; --header-ink2:#aab6cf;
+  --accent:#2a78d6; --accent-wash:rgba(42,120,214,.09);
+  --up:#d6453f; --down:#2a78d6; --mid:#eceef2; --priced:#c4c9d3;
+  --good:#0ca30c; --good-text:#00731a; --warn:#fab219; --crit:#d03b3b;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300;
+  --shadow:0 1px 2px rgba(13,27,54,.05), 0 6px 20px rgba(13,27,54,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --page:#0b0e15; --card:#141923; --raised:#1a202c;
+    --ink:#f2f4f8; --ink2:#b7bfcd; --muted:#808899;
+    --grid:#232a37; --axis:#3a4354; --border:rgba(255,255,255,.08);
+    --header:#0b1f45; --accent:#3987e5; --accent-wash:rgba(57,135,229,.14);
+    --up:#e66767; --down:#3987e5; --mid:#283040; --priced:#4a5366;
+    --good-text:#2fc24a;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --page:#0b0e15; --card:#141923; --raised:#1a202c;
+  --ink:#f2f4f8; --ink2:#b7bfcd; --muted:#808899;
+  --grid:#232a37; --axis:#3a4354; --border:rgba(255,255,255,.08);
+  --header:#0b1f45; --accent:#3987e5; --accent-wash:rgba(57,135,229,.14);
+  --up:#e66767; --down:#3987e5; --mid:#283040; --priced:#4a5366;
+  --good-text:#2fc24a;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--page);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+@media (max-width:640px){.wrap{padding:0 16px}}
+
+/* header */
+header.top{background:var(--header);color:var(--header-ink)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--header-ink2);font-weight:600}
+h1{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:32px;line-height:1.1;margin:4px 0 0;letter-spacing:-.01em}
+.meta{text-align:right;font-size:13px;color:var(--header-ink2)}
+.meta strong{color:var(--header-ink);font-weight:600;display:block;font-size:14px}
+.pill{display:inline-block;margin-top:6px;padding:2px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.25);font-size:11px;letter-spacing:.04em;color:var(--header-ink)}
+nav.tabs{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs button{appearance:none;border:0;background:none;color:var(--ink2);font:inherit;font-weight:600;padding:14px 14px 12px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+nav.tabs button:hover{color:var(--ink)}
+.synthetic{font-size:12px;color:var(--muted);padding:12px 0 0}
+.synthetic b{color:var(--ink2)}
+
+/* layout */
+main{padding:16px 0 48px}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}.c3{grid-column:span 3}
+@media (max-width:980px){.c8,.c7,.c6,.c5,.c4{grid-column:span 12}.c3{grid-column:span 6}}
+@media (max-width:520px){.c3{grid-column:span 12}}
+.stack{display:flex;flex-direction:column;gap:16px;min-width:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:20px;min-width:0}
+.card h2{font-size:15px;margin:0;font-weight:650;letter-spacing:-.005em}
+.card .sub{font-size:12.5px;color:var(--muted);margin:2px 0 14px}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+section[hidden]{display:none}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px}
+@media (max-width:980px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:650}
+.hero-num{font-size:56px;font-weight:650;letter-spacing:-.03em;line-height:1;margin:10px 0 4px}
+.hero-num small{font-size:20px;font-weight:600;color:var(--ink2);letter-spacing:0;margin-left:4px}
+.hero-cap{color:var(--ink2);font-size:13px}
+.read{font-size:15px;line-height:1.6;margin:16px 0 0;color:var(--ink)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
+.tile{background:var(--raised);border-radius:10px;padding:14px}
+.tile .lbl{font-size:12px;color:var(--ink2)}
+.tile .val{font-size:24px;font-weight:650;letter-spacing:-.02em;margin-top:4px;line-height:1.15}
+.tile .dl{font-size:12px;color:var(--muted);margin-top:2px}
+.meter{height:6px;border-radius:3px;background:var(--accent-wash);margin-top:8px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);border-radius:3px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative}
+@media (max-width:720px){.pipe{grid-template-columns:1fr 1fr;row-gap:14px}}
+.step{padding:4px 18px 4px 0;position:relative}
+.step:not(:last-child)::after{content:"";position:absolute;right:10px;top:22px;width:8px;height:8px;border-top:1.5px solid var(--axis);border-right:1.5px solid var(--axis);transform:rotate(45deg)}
+.step .n{font-size:26px;font-weight:650;letter-spacing:-.02em}
+.step .t{font-size:12.5px;color:var(--ink2);line-height:1.35}
+.step .bar{height:4px;border-radius:2px;background:var(--accent);margin:6px 0 8px;opacity:.85}
+
+/* curve chart + legends */
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.ln{width:14px;height:2px;border-radius:1px;display:inline-block}
+.chart{width:100%;position:relative}
+.chart svg{display:block;overflow:visible}
+.chart text{font:11px system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--muted);font-variant-numeric:tabular-nums}
+.chart text.v{fill:var(--ink2);font-weight:600}
+.hit{fill:transparent;cursor:default}
+.hit:hover{fill:var(--accent-wash)}
+details.tbl summary{font-size:12px;color:var(--muted);cursor:pointer;margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums;white-space:nowrap}
+th{color:var(--muted);font-weight:600;font-size:11.5px}
+th:first-child,td:first-child{text-align:left}
+.scroll{overflow-x:auto}
+
+/* actions */
+.action{padding:14px 0;border-top:1px solid var(--grid)}
+.action:first-of-type{border-top:0;padding-top:4px}
+.action .type{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.action h3{font-size:14px;margin:4px 0 4px;line-height:1.35;font-weight:650}
+.action p{margin:0;font-size:12.5px;color:var(--ink2)}
+.action .foot{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.action .impact{color:var(--ink);font-weight:600}
+
+/* filters */
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.chip{appearance:none;border:1px solid var(--border);background:var(--card);color:var(--ink2);font:inherit;font-size:12.5px;padding:5px 11px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+
+/* signal items */
+.item{border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:12px;background:var(--card)}
+.item.alert{border-left:3px solid var(--up)}
+.item-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.tags{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.tag{display:inline-flex;align-items:center;gap:6px;color:var(--ink2);font-weight:600}
+.badge{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:5px;background:color-mix(in oklab,var(--up) 14%,transparent);color:var(--up)}
+.item h3{font-size:15.5px;line-height:1.35;margin:6px 0 6px;font-weight:650}
+.item h3 a{color:var(--ink)}
+.item p{margin:0 0 6px;color:var(--ink2);font-size:13.5px}
+.item p.impl{color:var(--ink)}
+.item p.impl b{font-weight:650}
+.score{text-align:right;flex:none;min-width:84px}
+.score .s{font-size:22px;font-weight:650;letter-spacing:-.02em;line-height:1}
+.score .s small{font-size:12px;color:var(--muted);font-weight:500}
+.sbar{position:relative;height:4px;border-radius:2px;background:var(--mid);margin-top:7px}
+.sbar i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--ink2)}
+.alert .sbar i{background:var(--up)}
+.sbar u{position:absolute;top:-3px;bottom:-3px;width:1.5px;background:var(--ink);left:70%}
+.strip{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:2px;margin:12px 0 4px}
+.strip div{border-radius:5px;padding:5px 0 4px;text-align:center;font-size:12px;font-weight:650;font-variant-numeric:tabular-nums}
+.strip div span{display:block;font-size:10px;font-weight:500;opacity:.75}
+.spread{display:flex;align-items:center;gap:10px;margin:12px 0 4px;padding:8px 12px;border-radius:8px;background:var(--raised);font-size:13px}
+.spread b{font-size:16px}
+.check{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--ink2);margin-top:8px}
+.check i{font-style:normal;font-weight:700;font-size:11px;padding:1px 7px;border-radius:5px;border:1px solid var(--border);color:var(--ink)}
+.item details{margin-top:10px;border-top:1px solid var(--grid);padding-top:8px}
+.item summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--ink2)}
+.why{font-size:13px;color:var(--ink2);margin-top:8px;display:grid;gap:8px}
+.why .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:650;display:block}
+.cite{font-size:12px;color:var(--muted)}
+.fb{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.fb button{appearance:none;font:inherit;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--ink2);cursor:pointer}
+.fb button:hover{border-color:var(--accent);color:var(--accent)}
+.fb button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.fb .note{font-size:12px;color:var(--muted)}
+.empty{color:var(--muted);padding:24px 0;text-align:center}
+
+/* market snapshot */
+.mkt{display:grid;grid-template-columns:minmax(0,1fr) 72px 64px;align-items:center;gap:6px 10px;font-size:13px}
+.mkt .nm{color:var(--ink2)}
+.mkt .vv{font-weight:650;text-align:right;font-variant-numeric:tabular-nums}
+.mkt .dd{font-size:12px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.mkt .row{display:contents}
+.mkt .sp{grid-column:1 / -1;height:22px;margin:-2px 0 6px}
+
+/* horizontal bars */
+.hb{display:grid;grid-template-columns:96px minmax(0,1fr) 44px;gap:8px 10px;align-items:center;font-size:12.5px}
+.hb .nm{color:var(--ink2);display:flex;align-items:center;gap:6px}
+.hb .tr{height:12px}
+.hb .tr i{display:block;height:100%;background:var(--accent);border-radius:0 4px 4px 0}
+.hb .vv{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* exposure */
+.sliders{display:grid;gap:18px}
+.sl label{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);margin-bottom:6px}
+.sl label b{color:var(--ink);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:4px}
+@media (max-width:520px){.res{grid-template-columns:1fr}}
+.res .tile .val{font-size:20px}
+.pos{color:var(--up)} .neg{color:var(--good-text)}
+.note-s{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5}
+
+/* backtest */
+.status{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:650;margin-top:6px}
+.status.ok{color:var(--good-text)} .status.no{color:var(--crit)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;padding:2px;background:var(--raised)}
+.seg button{appearance:none;border:0;background:none;font:inherit;font-size:12.5px;font-weight:600;color:var(--ink2);padding:5px 12px;border-radius:7px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--border);border-radius:9px;padding:8px 10px;font-size:12px;box-shadow:0 6px 24px rgba(0,0,0,.14);max-width:260px;line-height:1.45}
+#tip b{font-size:13px}
+#tip .m{color:var(--muted)}
+footer{font-size:12px;color:var(--muted);padding:0 0 32px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Aldar Group Treasury</div>
+      <h1>Macro Signals</h1>
+    </div>
+    <div class="meta">
+      <strong>Daily digest · Thursday 1 October 2026</strong>
+      Generated 06:30 GST · covers 30 Sep 06:30 to 1 Oct 06:30<br>
+      <span class="pill">NYU Stern prototype</span>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Views">
+  <div class="wrap" role="tablist">
+    <button role="tab" data-tab="today" aria-selected="true">Today</button>
+    <button role="tab" data-tab="exposure" aria-selected="false">Aldar exposure</button>
+    <button role="tab" data-tab="backtest" aria-selected="false">Backtest · 2022</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="synthetic"><b>Synthetic data.</b> Headlines, market levels, scores and backtest results are illustrative only, created to review the design. Exposure figures use Aldar's H1 2026 investor presentation and the 25% fixed / 75% floating assumption.</div>
+  <main>
+
+  <!-- ============ TODAY ============ -->
+  <section id="today">
+    <div class="grid">
+      <div class="card c12">
+        <div class="hero">
+          <div>
+            <div class="kicker">Today's read</div>
+            <div class="hero-num" id="heroNum"></div>
+            <div class="hero-cap">Expected move in 3M EIBOR over the next 5 trading days, all signals combined</div>
+            <p class="read">Short-end pressure is building. A CBUAE liquidity drain and firm US inflation data point to 3M EIBOR rising about 10bp over the next week, and SOFR futures price only a small part of that. The long end moves less, as weaker oil offsets Fed repricing. Aldar's own credit picture improved: Moody's moved its outlook to positive and a peer sukuk priced tight.</p>
+          </div>
+          <div class="tiles" id="tiles"></div>
+        </div>
+      </div>
+
+      <div class="card c12">
+        <div class="card-head"><div><h2>Today's pipeline</h2><div class="sub">From raw news to items worth your time</div></div></div>
+        <div class="pipe" id="pipe"></div>
+      </div>
+
+      <div class="card c8">
+        <div class="card-head">
+          <div><h2>Expected move across the curve</h2><div class="sub">Next 5 trading days, bp. The gap between the bars is information the market has not priced yet.</div></div>
+          <div class="legend"><span><i class="sw" style="background:var(--priced)"></i>Priced in (SOFR futures / OIS)</span><span><i class="sw" style="background:var(--up)"></i>Platform view, up</span><span><i class="sw" style="background:var(--down)"></i>Platform view, down</span></div>
+        </div>
+        <div class="chart" id="curveChart"></div>
+        <div class="kicker" style="margin-top:14px">Not yet priced, bp</div><div class="strip" id="gapStrip"></div>
+        <div class="note-s" style="margin-top:6px">The market check keeps an item only if it adds to what SOFR futures and OIS already imply. The short end carries most of today's new information.</div>
+        <details class="tbl"><summary>Show as table</summary><div class="scroll" id="curveTable"></div></details>
+      </div>
+
+      <div class="card c4">
+        <h2>Suggested actions</h2>
+        <div class="sub">For review by FRM and the Head of Treasury</div>
+        <div id="actions"></div>
+      </div>
+
+      <div class="c8 stack">
+        <div class="card">
+          <div class="card-head">
+            <div><h2>Signals</h2><div class="sub">Ranked by score. Items scoring 70 or more trigger an alert.</div></div>
+          </div>
+          <div class="filters" id="filters"></div>
+          <div id="feed"></div>
+        </div>
+      </div>
+
+      <div class="c4 stack">
+        <div class="card">
+          <h2>Market snapshot</h2>
+          <div class="sub">Close 30 Sep, change on the day, 20-day trend</div>
+          <div class="mkt" id="mkt"></div>
+        </div>
+        <div class="card">
+          <h2>What actually moves Aldar's curve</h2>
+          <div class="sub">Average move at the most affected tenor in the 5 days after a scored item, last 12 months. These are the scoring weights.</div>
+          <div class="hb" id="weights"></div>
+        </div>
+        <div class="card">
+          <h2>Feedback this week</h2>
+          <div class="sub">Treasury ratings feed back into the scoring each day</div>
+          <div class="tiles" id="fbTiles"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPOSURE ============ -->
+  <section id="exposure" hidden>
+    <div class="grid">
+      <div class="c12 tiles" id="expTiles" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"></div>
+
+      <div class="card c6">
+        <h2>What-if: funding cost</h2>
+        <div class="sub">Change in annual cost, AED m. Positive means Aldar pays more.</div>
+        <div class="sliders">
+          <div class="sl"><label for="s3m">3M EIBOR move <b id="s3mv"></b></label><input id="s3m" type="range" min="-100" max="100" step="5" value="25"></div>
+          <div class="res" id="res3m"></div>
+          <div class="sl"><label for="s5y">5Y refinancing rate move <b id="s5yv"></b></label><input id="s5y" type="range" min="-100" max="100" step="5" value="25"></div>
+          <div class="res" id="res5y"></div>
+        </div>
+        <div class="note-s">Floating debt is 75% of AED 33.3bn; all AED 22.7bn of cash earns floating rates, so most of a 3M move cancels out. The 5Y line applies to the AED 6.8bn due in 2029 and AED 2.8bn due in 2030, once refinanced.</div>
+      </div>
+
+      <div class="card c6">
+        <div class="card-head">
+          <div><h2>Debt maturity profile</h2><div class="sub">AED bn, H1 2026</div></div>
+          <div class="legend"><span><i class="sw" style="background:var(--s1)"></i>Bank debt</span><span><i class="sw" style="background:var(--s2)"></i>Senior public debt</span><span><i class="sw" style="background:var(--s3)"></i>Hybrid notes</span></div>
+        </div>
+        <div class="chart" id="ladder"></div>
+        <details class="tbl"><summary>Show as table</summary><div class="scroll" id="ladderTable"></div></details>
+      </div>
+
+      <div class="card c12">
+        <h2>Scenario table</h2>
+        <div class="sub">Change in annual cost, AED m, for standard curve moves</div>
+        <div class="scroll" id="scen"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BACKTEST ============ -->
+  <section id="backtest" hidden>
+    <div class="grid">
+      <div class="card c12">
+        <div class="card-head">
+          <div><h2>Replay of the 2022 hiking cycle</h2><div class="sub">Material move = more than 25bp within 5 trading days. Pass mark: 80% flagged 1 to 3 days early in the right direction, at most 10 false alarms a week.</div></div>
+          <div class="seg" id="tenorSeg"><button data-t="eibor" aria-pressed="true">3M EIBOR</button><button data-t="ten" aria-pressed="false">10Y</button></div>
+        </div>
+        <div class="tiles" id="btTiles" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:18px"></div>
+        <div class="legend" style="margin-bottom:8px"><span><i class="ln" style="background:var(--ink2)"></i><span id="btName">3M EIBOR</span></span><span><i class="sw" style="background:var(--accent-wash);outline:1px solid var(--accent)"></i>Material move</span><span><i class="dot" style="background:var(--accent)"></i>Flagged early</span><span><i class="dot" style="border:2px solid var(--crit)"></i>Missed</span></div>
+        <div class="chart" id="btChart"></div>
+      </div>
+
+      <div class="card c6">
+        <h2>False alarms per week</h2>
+        <div class="sub">Flags not followed by a material move. Treasury's tolerance is 10 a week.</div>
+        <div class="chart" id="fpChart"></div>
+      </div>
+
+      <div class="card c6">
+        <h2>Does it beat the market?</h2>
+        <div class="sub">Compared with a rule that only reads SOFR futures and OIS pricing</div>
+        <div class="scroll" id="bench"></div>
+        <div class="note-s">UAE-specific moves are those driven by CBUAE liquidity or the EIBOR–SOFR spread. These are where the client expects the platform to add most.</div>
+      </div>
+
+      <div class="card c12">
+        <h2>Every material move</h2>
+        <div class="sub" id="epSub"></div>
+        <div class="scroll" id="epTable"></div>
+      </div>
+    </div>
+  </section>
+  </main>
+  <footer>Prototype by an NYU Stern team for Aldar Group Treasury. Not investment advice. Exposure source: Aldar investor presentation, H1 2026, slide 20.</footer>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const bp = n => n === 0 ? '0' : (n > 0 ? '+' : '−') + Math.abs(Math.round(n * 10) / 10);
+const aed = n => (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n).toFixed(1);
+function rng(seed) { return () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} } };
+
+/* ---------- data (synthetic) ---------- */
+const TENORS = ['3M','6M','1Y','2Y','3Y','5Y','7Y','10Y'];
+const DRIVERS = { 'Fed': 'var(--s1)', 'CBUAE': 'var(--s2)', 'Oil': 'var(--s3)', 'GCC fiscal': 'var(--s4)', 'BoE': 'var(--s5)', 'Aldar & peer credit': 'var(--s6)' };
+const ALERT = 70;
+
+// Aldar exposure: investor presentation H1 2026 + client assumption (25% fixed / 75% floating; all cash floating)
+const DEBT = 33.3, FLOAT = 0.75, CASH = 22.7;
+const perBp = { debt: DEBT * FLOAT * 1000 / 1e4, cash: CASH * 1000 / 1e4 }; // AED m per year per 1bp
+const REFI = [{ y: 2029, amt: 6.8 }, { y: 2030, amt: 2.8 }];
+
+const ITEMS = [
+  { id: 'cbuae-mbill', driver: 'CBUAE', time: '30 Sep, 15:10 GST', score: 86,
+    title: 'CBUAE drains AED 18bn through its M-Bill auction, the largest since March',
+    source: 'Central Bank of the UAE', url: 'https://www.centralbank.ae/en/',
+    summary: 'The 1-month and 3-month Monetary Bills auction absorbed AED 18bn of bank reserves against AED 11bn maturing. Overnight interbank rates closed 6bp higher.',
+    impl: 'Tighter dirham liquidity tends to lift 3M EIBOR before any policy change, so Aldar’s floating bank debt resets higher at the next fixing.',
+    move: [8,6,4,2,1,0,0,0], check: ['New', 'SOFR futures unchanged; the EIBOR–SOFR spread widening is not yet in the 3M fixing.'],
+    why: 'Net drain of AED 7bn. After the six comparable drains since 2023, 3M EIBOR rose 5 to 11bp within five trading days (median +7bp). CBUAE releases have the strongest measured follow-through of any source at the 3M point.',
+    cite: 'CBUAE, Monetary Bills auction results, 30 Sep 2026' },
+  { id: 'moodys', driver: 'Aldar & peer credit', time: '30 Sep, 19:40 GST', score: 78,
+    title: 'Moody’s revises Aldar’s outlook to positive, citing record sales and lower leverage',
+    source: 'Moody’s Ratings', url: 'https://ratings.moodys.com/',
+    summary: 'Moody’s points to record development sales, growing recurring income and net debt to EBITDA of 1.4x. It says an upgrade is possible within 12 to 18 months.',
+    impl: 'Supports tighter spreads on new Aldar bonds and bank facilities, a helpful backdrop for the AED 6.8bn maturing in 2029.',
+    spread: -6, check: ['New', 'Aldar 2030 bond spread was unchanged at the time of scoring.'],
+    why: 'Directly names Aldar. Since 2021, positive outlook changes for GCC real estate issuers were followed by 4 to 12bp of spread tightening within a week.',
+    cite: 'Moody’s, rating action on Aldar Properties PJSC, 30 Sep 2026' },
+  { id: 'pce-waller', driver: 'Fed', time: '30 Sep, 16:30 GST', score: 74,
+    title: 'US core PCE comes in at 2.9%, above forecast; Fed’s Waller sees “no urgency” to cut',
+    source: 'Federal Reserve Board', url: 'https://www.federalreserve.gov/',
+    summary: 'August core PCE rose 0.3% on the month against 0.2% expected. Governor Waller said later that further cuts can wait until inflation progress resumes.',
+    impl: 'A slower Fed path lifts the 1Y to 5Y part of the curve most, and the dirham peg carries it into CBUAE policy.',
+    move: [2,3,5,7,6,5,4,3], check: ['Partly priced', 'December SOFR futures already rose 4bp; the platform sees a further 3bp at 2Y.'],
+    why: 'An inflation surprise plus a hawkish Fed speaker on the same day. Comparable days since 2023 moved the AED 2Y swap up 4 to 9bp over five days. About half of that is already priced.',
+    cite: 'BEA, Personal Income and Outlays, Aug 2026; Federal Reserve, Waller speech, 30 Sep 2026' },
+  { id: 'emaar-sukuk', driver: 'Aldar & peer credit', time: '30 Sep, 17:05 GST', score: 61,
+    title: 'Emaar prices a USD 750m five-year sukuk at T+95, eight times oversubscribed',
+    source: 'Emaar Properties disclosure', url: 'https://www.emaar.com/',
+    summary: 'Final pricing came 30bp inside initial guidance on an order book above USD 6bn, two thirds from international investors.',
+    impl: 'Sets a tight new peer benchmark for any Aldar senior issuance or 2029 pre-funding.',
+    spread: -4, check: ['New', 'Sets a fresh peer level; Aldar’s curve has not repriced yet.'],
+    why: 'Large, tight peer deals have moved Aldar’s secondary spreads 2 to 6bp within a week. Kept below the alert threshold because the effect is indirect.',
+    cite: 'Emaar Properties, sukuk pricing announcement, 30 Sep 2026' },
+  { id: 'opec', driver: 'Oil', time: '30 Sep, 21:20 GST', score: 52,
+    title: 'Brent falls 3.1% to $71.40 as OPEC+ signals a larger November output increase',
+    source: 'Reuters', url: 'https://www.reuters.com/markets/commodities/',
+    summary: 'Delegates said the group is weighing a second monthly increase. Brent posted its biggest one-day drop since July.',
+    impl: 'Lower oil eases inflation expectations and nudges long-end yields down. It also softens the GCC fiscal outlook.',
+    move: [0,0,0,-1,-1,-2,-2,-3], check: ['Partly priced', 'Largely reflected in US 10Y breakevens already.'],
+    why: 'Oil moves above 3% have shifted the 10Y point by 1 to 4bp over the following week. The 3M point has shown no measurable response.',
+    cite: 'Reuters, OPEC+ output report, 30 Sep 2026' },
+  { id: 'ksa-deficit', driver: 'GCC fiscal', time: '30 Sep, 18:00 GST', score: 48,
+    title: 'Saudi Arabia widens its 2027 deficit estimate and plans USD 12bn of extra issuance',
+    source: 'Saudi Ministry of Finance', url: 'https://www.mof.gov.sa/en/',
+    summary: 'The pre-budget statement raises the 2027 deficit to 3.1% of GDP, funded mainly through international debt markets.',
+    impl: 'More GCC sovereign supply tends to push regional long-end yields up, raising the benchmark for future Aldar issuance.',
+    move: [0,0,0,0,1,2,3,4], check: ['New', 'GCC sovereign curve unchanged at the time of scoring.'],
+    why: 'Past GCC supply announcements of this size lifted the 7Y and 10Y points 2 to 5bp over a week, mainly through wider sovereign spreads.',
+    cite: 'Saudi MoF, pre-budget statement for FY2027, 30 Sep 2026' },
+  { id: 'boe', driver: 'BoE', time: '30 Sep, 15:00 GST', score: 24,
+    title: 'Bank of England holds Bank Rate; two of nine members vote to cut',
+    source: 'Bank of England', url: 'https://www.bankofengland.co.uk/',
+    summary: 'The 7–2 split matched market expectations. The statement kept guidance for a gradual approach to cuts.',
+    impl: 'Little direct read-across to AED rates. Shown for context only.',
+    move: [0,0,0,-1,-1,-1,0,0], check: ['Priced in', 'Fully priced in SONIA futures before the meeting.'],
+    why: 'BoE decisions in line with expectations have had no measurable effect on AED rates. The score stays low because the market had priced this outcome.',
+    cite: 'Bank of England, Monetary Policy Summary, 30 Sep 2026' },
+];
+const IMPLIED = [2,2,3,4,3,2,1,1];
+const NET = TENORS.map((_, i) => ITEMS.reduce((s, it) => s + (it.move ? it.move[i] : 0), 0));
+
+const ACTIONS = [
+  { type: 'Deposits', title: 'Move surplus cash from overnight into 1 to 3 month deposits',
+    body: 'Lock in the higher fixings expected after the CBUAE liquidity drain before banks reprice their deposit offers.',
+    impact: '≈ +AED 3.0m a year on AED 5bn', from: 'CBUAE M-Bill auction' },
+  { type: 'Hedging', title: 'Consider fixing AED 2 to 3bn of floating debt through 3Y swaps before the 4 November FOMC',
+    body: 'Short-end pressure is mostly unpriced. Fixing part of the floating book caps the cost if the move comes through.',
+    impact: 'Avoids ≈ AED 1.75m a year per 7bp on AED 2.5bn', from: 'CBUAE drain, US core PCE' },
+  { type: 'Issuance timing', title: 'Start early talks on refinancing the AED 6.8bn due in 2029',
+    body: 'A positive outlook and a tight peer sukuk put Aldar’s credit spread near its best level of the year.',
+    impact: '≈ AED 3.4m a year saved per 5bp of spread', from: 'Moody’s outlook, Emaar sukuk' },
+];
+
+function walk(seed, end, vol, n = 20) { const r = rng(seed), out = [end]; for (let i = 1; i < n; i++) out.unshift(out[0] - (r() - 0.48) * vol); return out; }
+const MARKET = [
+  { nm: '3M EIBOR', v: '3.62%', d: '+4bp', s: walk(1, 3.62, .03) },
+  { nm: '3M Term SOFR', v: '3.48%', d: '+1bp', s: walk(2, 3.48, .02) },
+  { nm: 'EIBOR–SOFR spread', v: '14bp', d: '+3bp', s: walk(3, 14, 1.4) },
+  { nm: 'AED 10Y swap', v: '3.95%', d: '+2bp', s: walk(4, 3.95, .035) },
+  { nm: 'US 10Y Treasury', v: '4.06%', d: '+3bp', s: walk(5, 4.06, .04) },
+  { nm: 'Brent', v: '$71.40', d: '−3.1%', s: walk(6, 71.4, 1.1) },
+];
+const WEIGHTS = [['CBUAE', 7.2], ['Fed', 6.1], ['Aldar & peer credit', 4.4], ['GCC fiscal', 2.6], ['Oil', 2.1], ['BoE', 0.7]];
+
+/* ---------- tooltip ---------- */
+const tip = $('#tip');
+function showTip(html, x, y) {
+  tip.innerHTML = html; tip.hidden = false;
+  const r = tip.getBoundingClientRect();
+  let l = x + 14, t = y + 14;
+  if (l + r.width > innerWidth - 8) l = x - r.width - 14;
+  if (t + r.height > innerHeight - 8) t = y - r.height - 14;
+  tip.style.left = Math.max(8, l) + 'px'; tip.style.top = Math.max(8, t) + 'px';
+}
+document.addEventListener('pointermove', e => {
+  const t = e.target.closest && e.target.closest('[data-tip]');
+  if (t) showTip(t.dataset.tip, e.clientX, e.clientY);
+  else if (!(e.target.closest && e.target.closest('[data-xhair]'))) tip.hidden = true;
+});
+document.addEventListener('focusin', e => {
+  const t = e.target.closest && e.target.closest('[data-tip]');
+  if (t) { const r = t.getBoundingClientRect(); showTip(t.dataset.tip, r.right, r.top); } else tip.hidden = true;
+});
+document.addEventListener('focusout', () => { tip.hidden = true; });
+
+/* ---------- svg helpers ---------- */
+function barPath(x, y0, y1, w, r = 4) {
+  const h = Math.abs(y1 - y0); if (h < 0.5) return '';
+  r = Math.min(r, h, w / 2); const s = y1 < y0 ? 1 : -1;
+  return `M${x},${y0}V${y1 + s * r}Q${x},${y1} ${x + r},${y1}H${x + w - r}Q${x + w},${y1} ${x + w},${y1 + s * r}V${y0}Z`;
+}
+const niceStep = range => [1, 2, 5, 10, 20, 25, 50, 100].find(s => range / s <= 6) || 200;
+const W = el => Math.max(260, el.clientWidth);
+function cellColor(v, full = 10) {
+  const p = Math.min(100, Math.round(Math.abs(v) / full * 100));
+  const bg = v === 0 ? 'var(--mid)' : `color-mix(in oklab, ${v > 0 ? 'var(--up)' : 'var(--down)'} ${Math.max(18, p)}%, var(--mid))`;
+  return { bg, fg: p >= 55 ? '#fff' : 'var(--ink)' };
+}
+
+/* ---------- TODAY ---------- */
+function renderToday() {
+  const n3m = NET[0];
+  $('#heroNum').innerHTML = `${bp(n3m)}<small>bp</small>`;
+  const debt = n3m * perBp.debt, cash = n3m * perBp.cash;
+  const alerts = ITEMS.filter(i => i.score >= ALERT).length;
+  const fpUsed = 4;
+  $('#tiles').innerHTML = [
+    ['Alerts sent', alerts, 'To FRM and the Head of Treasury, by email and Teams'],
+    ['Funding cost, net of cash', `${aed(debt - cash)}m`, `AED a year · debt ${aed(debt)}m, cash income ${aed(cash)}m`],
+    ['Aldar credit spread', `${bp(-6)}bp`, 'Expected over 5 days, from 2 credit items'],
+    ['False alarms this week', `${fpUsed} of 10`, `<div class="meter"><i style="width:${fpUsed * 10}%"></i></div>`],
+  ].map(([l, v, d]) => `<div class="tile"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div></div>`).join('');
+
+  const P = [[41, 'items scanned from news wires, central banks, five bank research portals and Aldar & peer disclosures'],
+             [15, 'scored as relevant to Aldar’s curve or credit'],
+             [ITEMS.length, 'carry information the market has not fully priced'],
+             [alerts, 'scored above the alert threshold']];
+  $('#pipe').innerHTML = P.map(([n, t]) => `<div class="step"><div class="n">${n}</div><div class="bar" style="width:${Math.max(6, n / 41 * 100)}%"></div><div class="t">${t}</div></div>`).join('');
+
+  renderActions(); renderFilters(); renderFeed(); renderMarket(); renderWeights(); renderFb(); renderCurve();
+}
+
+function renderCurve() {
+  const el = $('#curveChart'), w = W(el), h = 270, m = { l: 34, r: 8, t: 18, b: 26 };
+  const vals = NET.concat(IMPLIED), hi = Math.max(5, ...vals), lo = Math.min(0, ...vals);
+  const step = niceStep(hi - lo), yMax = Math.ceil(hi / step) * step, yMin = Math.floor(lo / step) * step;
+  const y = v => m.t + (yMax - v) / (yMax - yMin) * (h - m.t - m.b);
+  const band = (w - m.l - m.r) / TENORS.length, bw = Math.min(20, band * 0.28);
+  let g = '';
+  for (let v = yMin; v <= yMax; v += step) g += `<line x1="${m.l}" x2="${w - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 0 ? 'var(--axis)' : 'var(--grid)'}"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  TENORS.forEach((t, i) => {
+    const cx = m.l + band * i + band / 2, x0 = cx - bw - 1, x1 = cx + 1, net = NET[i], imp = IMPLIED[i];
+    const gap = net - imp;
+    g += `<path d="${barPath(x0, y(0), y(imp), bw)}" fill="var(--priced)"/>`;
+    g += `<path d="${barPath(x1, y(0), y(net), bw)}" fill="${net >= 0 ? 'var(--up)' : 'var(--down)'}"/>`;
+    g += `<text class="v" x="${x1 + bw / 2}" y="${net >= 0 ? y(net) - 6 : y(net) + 14}" text-anchor="middle">${bp(net)}</text>`;
+    g += `<text x="${cx}" y="${h - 6}" text-anchor="middle">${t}</text>`;
+    const tipHtml = `<b>${t}</b><br><b>${bp(net)}bp</b> <span class="m">platform view</span><br><b>${bp(imp)}bp</b> <span class="m">priced in</span><br><b>${bp(gap)}bp</b> <span class="m">not yet priced</span>`;
+    g += `<rect class="hit" x="${m.l + band * i + 2}" y="${m.t}" width="${band - 4}" height="${h - m.t - m.b}" rx="6" data-tip="${esc(tipHtml)}" tabindex="0"/>`;
+  });
+  el.innerHTML = `<svg width="${w}" height="${h}" role="img" aria-label="Expected move by tenor">${g}</svg>`;
+  $('#gapStrip').innerHTML = NET.map((v, i) => { const d = v - IMPLIED[i], c = cellColor(d); return `<div style="background:${c.bg};color:${c.fg}">${bp(d)}<span>${TENORS[i]}</span></div>`; }).join('');
+  $('#curveTable').innerHTML = `<table><tr><th>Tenor</th>${TENORS.map(t => `<th>${t}</th>`).join('')}</tr>
+    <tr><td>Platform view</td>${NET.map(v => `<td>${bp(v)}</td>`).join('')}</tr>
+    <tr><td>Priced in</td>${IMPLIED.map(v => `<td>${bp(v)}</td>`).join('')}</tr>
+    <tr><td>Not yet priced</td>${NET.map((v, i) => `<td>${bp(v - IMPLIED[i])}</td>`).join('')}</tr></table>`;
+}
+
+function renderActions() {
+  $('#actions').innerHTML = ACTIONS.map(a => `<div class="action"><div class="type">${a.type}</div><h3>${a.title}</h3><p>${a.body}</p>
+    <div class="foot"><span class="impact">${a.impact}</span><span>From: ${a.from}</span></div></div>`).join('');
+}
+
+let filter = 'all';
+function renderFilters() {
+  const opts = [['all', 'All', null], ['alerts', 'Alerts only', null], ...Object.keys(DRIVERS).filter(d => ITEMS.some(i => i.driver === d)).map(d => [d, d, DRIVERS[d]])];
+  $('#filters').innerHTML = opts.map(([k, l, c]) => `<button class="chip" data-f="${esc(k)}" aria-pressed="${filter === k}">${c ? `<i class="dot" style="background:${c}"></i>` : ''}${l}</button>`).join('');
+}
+$('#filters').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; filter = b.dataset.f; renderFilters(); renderFeed(); });
+
+function renderFeed() {
+  const list = ITEMS.filter(i => filter === 'all' || (filter === 'alerts' ? i.score >= ALERT : i.driver === filter)).sort((a, b) => b.score - a.score);
+  $('#feed').innerHTML = list.length ? list.map(it => {
+    const alert = it.score >= ALERT, fb = store.get('fb:' + it.id);
+    const strip = it.move
+      ? `<div class="strip">${it.move.map((v, i) => { const c = cellColor(v); return `<div style="background:${c.bg};color:${c.fg}" data-tip="${esc(`<b>${bp(v)}bp</b> <span class="m">at ${TENORS[i]}</span>`)}">${bp(v)}<span>${TENORS[i]}</span></div>`; }).join('')}</div>`
+      : `<div class="spread"><span>Aldar credit spread</span><b>${bp(it.spread)}bp</b><span class="m" style="color:var(--muted)">expected over 5 days · no direct effect on the base curve</span></div>`;
+    return `<article class="item${alert ? ' alert' : ''}">
+      <div class="item-top">
+        <div>
+          <div class="tags">${alert ? '<span class="badge">Alert</span>' : ''}<span class="tag"><i class="dot" style="background:${DRIVERS[it.driver]}"></i>${it.driver}</span><span>${it.time}</span></div>
+          <h3><a href="${it.url}" target="_blank" rel="noopener">${it.title}</a></h3>
+        </div>
+        <div class="score"><div class="s">${it.score}<small> /100</small></div><div class="sbar" title="Alert threshold 70"><i style="width:${it.score}%"></i><u></u></div></div>
+      </div>
+      <p>${it.summary}</p>
+      <p class="impl"><b>For Aldar:</b> ${it.impl}</p>
+      ${strip}
+      <div class="check"><i>${it.check[0]}</i>${it.check[1]}</div>
+      <details><summary>Why it scored ${it.score}</summary>
+        <div class="why"><div>${it.why}</div><div class="cite"><span class="k">Source</span><a href="${it.url}" target="_blank" rel="noopener">${it.cite}</a> · ${it.source}</div></div>
+      </details>
+      <div class="fb"><button data-fb="${it.id}" data-v="up" aria-pressed="${fb === 'up'}">Useful</button><button data-fb="${it.id}" data-v="down" aria-pressed="${fb === 'down'}">Not useful</button><span class="note">${fb ? 'Thanks. This feeds tomorrow’s scoring.' : ''}</span></div>
+    </article>`;
+  }).join('') : '<div class="empty">No items match this filter today.</div>';
+}
+$('#feed').addEventListener('click', e => {
+  const b = e.target.closest('[data-fb]'); if (!b) return;
+  const k = 'fb:' + b.dataset.fb; store.set(k, store.get(k) === b.dataset.v ? null : b.dataset.v); renderFeed(); renderFb();
+});
+
+function spark(vals, w = 260, h = 22) {
+  const lo = Math.min(...vals), hi = Math.max(...vals), x = i => 2 + i / (vals.length - 1) * (w - 6), y = v => 3 + (hi - v) / ((hi - lo) || 1) * (h - 6);
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none"><polyline fill="none" stroke="var(--accent)" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linejoin="round" points="${vals.map((v, i) => `${x(i)},${y(v)}`).join(' ')}"/></svg>`;
+}
+function renderMarket() {
+  $('#mkt').innerHTML = MARKET.map(r => `<div class="row"><span class="nm">${r.nm}</span><span class="vv">${r.v}</span><span class="dd">${r.d}</span></div><div class="sp">${spark(r.s)}</div>`).join('');
+}
+function renderWeights() {
+  const max = WEIGHTS[0][1];
+  $('#weights').innerHTML = WEIGHTS.map(([d, v]) => `<span class="nm"><i class="dot" style="background:${DRIVERS[d]}"></i>${d === 'Aldar & peer credit' ? 'Credit' : d}</span><span class="tr" data-tip="${esc(`<b>${v.toFixed(1)}bp</b> <span class="m">average move after a ${d} item</span>`)}"><i style="width:${v / max * 100}%"></i></span><span class="vv">${v.toFixed(1)}bp</span>`).join('');
+}
+function renderFb() {
+  const mine = ITEMS.map(i => store.get('fb:' + i.id)).filter(Boolean);
+  const rated = 26 + mine.length, useful = 20 + mine.filter(v => v === 'up').length;
+  $('#fbTiles').innerHTML = [
+    ['Items rated', rated, 'Since Monday'],
+    ['Rated useful', `${Math.round(useful / rated * 100)}%`, `${useful} of ${rated}`],
+    ['Missed moves reported', 0, 'Moves treasury saw that the platform did not flag'],
+    ['Scoring updates', 3, 'Weight changes from feedback'],
+  ].map(([l, v, d]) => `<div class="tile"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div></div>`).join('');
+}
+
+/* ---------- EXPOSURE ---------- */
+const LADDER = [['2026', [1.0, 0, 0]], ['2027', [0.7, 0, 0]], ['2028', [2.5, 0, 0]], ['2029', [5.0, 1.8, 0]], ['2030', [2.8, 0, 0]], ['2031+', [0.1, 6.6, 12.9]]];
+const LSER = ['Bank debt', 'Senior public debt', 'Hybrid notes'];
+function cost3m(x) { const d = x * perBp.debt, c = x * perBp.cash; return { d, c, n: d - c }; }
+function cost5y(x) { return REFI.map(r => r.amt * 1000 * x / 1e4); }
+function renderExposure() {
+  $('#expTiles').innerHTML = [
+    ['Gross debt', 'AED 33.3bn', 'Bank 12.1 · senior 8.4 · hybrid 12.9'],
+    ['Floating debt', 'AED 25.0bn', '75% of gross debt (client assumption)'],
+    ['Cash, floating', 'AED 22.7bn', 'Earns floating rates, offsets most of a 3M move'],
+    ['Net floating exposure', 'AED 2.3bn', `+1bp on 3M ≈ ${aed(perBp.debt - perBp.cash)}m a year, net`],
+    ['Due in 2029', 'AED 6.8bn', 'Bank 5.0 · senior public 1.8'],
+  ].map(([l, v, d]) => `<div class="tile" style="background:var(--card);border:1px solid var(--border)"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div></div>`).join('');
+  updateSliders(); renderLadder(); renderScen();
+}
+const cls = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+function updateSliders() {
+  const a = +$('#s3m').value, b = +$('#s5y').value, c = cost3m(a), r = cost5y(b);
+  $('#s3mv').textContent = bp(a) + 'bp'; $('#s5yv').textContent = bp(b) + 'bp';
+  const t = (l, v, d = '') => `<div class="tile"><div class="lbl">${l}</div><div class="val ${cls(v)}">${aed(v)}m</div><div class="dl">${d}</div></div>`;
+  $('#res3m').innerHTML = t('Floating debt cost', c.d) + `<div class="tile"><div class="lbl">Extra cash income</div><div class="val ${cls(-c.c)}">${aed(c.c)}m</div><div class="dl">offsets the debt cost</div></div>` + t('Net change', c.n);
+  $('#res5y').innerHTML = t('2029 refinancing', r[0], 'AED 6.8bn') + t('2030 refinancing', r[1], 'AED 2.8bn') + t('Combined', r[0] + r[1]);
+}
+$('#s3m').addEventListener('input', updateSliders); $('#s5y').addEventListener('input', updateSliders);
+
+function renderLadder() {
+  const el = $('#ladder'), w = W(el), h = 330, m = { l: 30, r: 8, t: 20, b: 26 };
+  const tot = LADDER.map(([, v]) => v.reduce((a, b) => a + b, 0)), yMax = 20;
+  const y = v => m.t + (yMax - v) / yMax * (h - m.t - m.b);
+  const band = (w - m.l - m.r) / LADDER.length, bw = Math.min(24, band * 0.42);
+  let g = '';
+  for (let v = 0; v <= yMax; v += 5) g += `<line x1="${m.l}" x2="${w - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${v ? 'var(--grid)' : 'var(--axis)'}"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  LADDER.forEach(([yr, parts], i) => {
+    const x = m.l + band * i + (band - bw) / 2; let acc = 0;
+    const nonzero = parts.map((v, k) => [v, k]).filter(([v]) => v > 0), top = nonzero[nonzero.length - 1][1];
+    parts.forEach((v, k) => {
+      if (!v) return;
+      const y0 = y(acc) - (acc ? 2 : 0), y1 = y(acc + v);
+      g += k === top ? `<path d="${barPath(x, y0, y1, bw)}" fill="var(--s${k + 1})"/>` : `<rect x="${x}" y="${y1}" width="${bw}" height="${Math.max(0, y0 - y1)}" fill="var(--s${k + 1})"/>`;
+      acc += v;
+    });
+    g += `<text class="v" x="${x + bw / 2}" y="${y(tot[i]) - 6}" text-anchor="middle">${tot[i].toFixed(1)}</text><text x="${x + bw / 2}" y="${h - 6}" text-anchor="middle">${yr}</text>`;
+    const tipHtml = `<b>${yr}: AED ${tot[i].toFixed(1)}bn</b>` + parts.map((v, k) => v ? `<br><b>${v.toFixed(1)}</b> <span class="m">${LSER[k]}</span>` : '').join('');
+    g += `<rect class="hit" x="${m.l + band * i + 2}" y="${m.t}" width="${band - 4}" height="${h - m.t - m.b}" rx="6" data-tip="${esc(tipHtml)}" tabindex="0"/>`;
+  });
+  const i29 = 3, x29 = m.l + band * i29 + band / 2;
+  g += `<text x="${x29}" y="${y(tot[i29]) - 24}" text-anchor="middle" style="fill:var(--ink2);font-weight:600">Refinancing window</text>`;
+  el.innerHTML = `<svg width="${w}" height="${h}" role="img" aria-label="Debt maturity profile">${g}</svg>`;
+  $('#ladderTable').innerHTML = `<table><tr><th>Year</th>${LSER.map(s => `<th>${s}</th>`).join('')}<th>Total</th></tr>${LADDER.map(([yr, p], i) => `<tr><td>${yr}</td>${p.map(v => `<td>${v.toFixed(1)}</td>`).join('')}<td>${tot[i].toFixed(1)}</td></tr>`).join('')}</table>`;
+}
+function renderScen() {
+  const S = [['Parallel +25bp', 25, 25], ['Parallel +50bp', 50, 50], ['Parallel −25bp', -25, -25], ['Parallel −50bp', -50, -50], ['Short end +50, long end +10', 50, 10], ['Short end −50, long end −10', -50, -10]];
+  $('#scen').innerHTML = `<table><tr><th>Scenario</th><th>Floating debt</th><th>Cash income offset</th><th>Net, current book</th><th>2029–30 refinancing</th></tr>${S.map(([n, a, b]) => { const c = cost3m(a), r = cost5y(b); return `<tr><td>${n}</td><td class="${cls(c.d)}">${aed(c.d)}</td><td class="${cls(-c.c)}">${aed(-c.c)}</td><td class="${cls(c.n)}"><b>${aed(c.n)}</b></td><td class="${cls(r[0] + r[1])}">${aed(r[0] + r[1])}</td></tr>`; }).join('')}</table>`;
+}
+
+/* ---------- BACKTEST ---------- */
+const DAYS = (() => { const out = []; for (let d = new Date(Date.UTC(2022, 0, 3)); d.getUTCFullYear() === 2022; d.setUTCDate(d.getUTCDate() + 1)) { const k = d.getUTCDay(); if (k && k < 6) out.push(d.toISOString().slice(0, 10)); } return out; })();
+const idx = s => DAYS.findIndex(d => d >= s);
+const MEET = [['2022-03-17', 25], ['2022-05-05', 50], ['2022-06-16', 75], ['2022-07-28', 75], ['2022-09-22', 75], ['2022-11-03', 75], ['2022-12-15', 50]].map(([d, h]) => ({ i: idx(d), h }));
+const SHOCK = [['2022-08-10', 30], ['2022-10-17', 28]].map(([d, h]) => ({ i: idx(d), h })); // UAE liquidity squeezes
+const fmtD = s => new Date(s + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+const SERIES = {
+  eibor: (() => { const r = rng(7); return DAYS.map((d, t) => {
+    let v = 0.36;
+    for (const m of MEET) v += (t >= m.i ? 1 : Math.max(0, 1 - (m.i - t) / 12)) * m.h / 100;
+    for (const s of SHOCK) { const k = t - s.i; if (k > 0) v += Math.min(1, k / 4) * (k > 10 ? Math.exp(-(k - 10) / 15) : 1) * s.h / 100; }
+    return { d, v: v + (r() - 0.5) * 0.04 }; }); })(),
+  ten: (() => { const r = rng(11); let v = 1.63; return DAYS.map((d, t) => {
+    const target = 1.63 + Math.min(1, t / 200) * 2.4 - Math.max(0, t - 200) / 60 * 0.5;
+    v += (target - v) * 0.05 + (r() - 0.5) * 0.12; if (r() < 0.04) v += (r() - 0.45) * 0.3;
+    return { d, v }; }); })(),
+};
+function episodes(key) {
+  const s = SERIES[key], eps = [];
+  for (let i = 0; i < s.length - 5;) { const mv = s[i + 5].v - s[i].v; if (Math.abs(mv) >= 0.25) { eps.push({ i, mv }); i += 5; } else i++; }
+  const drv = key === 'eibor' ? ['Fed', 'Fed', 'CBUAE'] : ['Fed', 'Oil', 'Fed', 'GCC fiscal', 'BoE'];
+  eps.forEach((e, k) => {
+    e.uae = key === 'eibor' && SHOCK.some(x => e.i >= x.i - 3 && e.i <= x.i + 6);
+    e.hit = k % 6 !== 4; e.lead = 1 + (k * 7) % 3;
+    e.fut = !e.uae && k % 3 !== 1;
+    e.driver = e.uae ? 'CBUAE liquidity' : drv[k % drv.length];
+  });
+  return eps;
+}
+const FP = (() => { const r = rng(21); return Array.from({ length: 52 }, () => 1 + Math.floor(r() * r() * 9 + r() * 3)); })();
+let tenor = 'eibor';
+const median = a => { const s = [...a].sort((x, y) => x - y), n = s.length; return n ? (n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2) : 0; };
+function renderBacktest() {
+  const eps = episodes(tenor), hits = eps.filter(e => e.hit), recall = hits.length / eps.length;
+  const lead = median(hits.map(e => e.lead)), fpAvg = FP.reduce((a, b) => a + b, 0) / FP.length, fpMax = Math.max(...FP);
+  const uae = eps.filter(e => e.uae);
+  const ok = (pass, txt) => `<div class="status ${pass ? 'ok' : 'no'}">${pass ? '✓' : '✕'} ${txt}</div>`;
+  $('#btName').textContent = tenor === 'eibor' ? '3M EIBOR' : '10Y';
+  $('#btTiles').innerHTML = [
+    ['Material moves flagged', `${Math.round(recall * 100)}%`, `${hits.length} of ${eps.length} moves`, ok(recall >= 0.8, 'Target 80%')],
+    ['Right direction', '100%', `All ${hits.length} flags`, ok(true, 'Required')],
+    ['Median lead time', `${lead} days`, 'Before the move began', ok(lead >= 1 && lead <= 3, 'Target 1 to 3 days')],
+    ['False alarms per week', fpAvg.toFixed(1), `Worst week: ${fpMax}`, ok(fpMax <= 10, 'Cap 10 a week')],
+  ].map(([l, v, d, s]) => `<div class="tile"><div class="lbl">${l}</div><div class="val">${v}</div><div class="dl">${d}</div>${s}</div>`).join('');
+  renderBtChart(eps); renderFp();
+  const fut = eps.filter(e => e.fut);
+  const pct = (a, b) => b ? `${Math.round(a / b * 100)}% <span style="color:var(--muted)">(${a}/${b})</span>` : '—';
+  $('#bench').innerHTML = `<table><tr><th></th><th>All moves</th><th>UAE-specific</th><th>Median lead</th></tr>
+    <tr><td><b>Macro Signals</b></td><td>${pct(hits.length, eps.length)}</td><td>${pct(uae.filter(e => e.hit).length, uae.length)}</td><td>${lead} days</td></tr>
+    <tr><td>Futures &amp; OIS only</td><td>${pct(fut.length, eps.length)}</td><td>${pct(0, uae.length)}</td><td>1 day</td></tr></table>`;
+  $('#epSub').textContent = `${eps.length} moves of more than 25bp in 5 trading days on ${tenor === 'eibor' ? '3M EIBOR' : 'the 10Y'} during 2022`;
+  $('#epTable').innerHTML = `<table><tr><th>Move began</th><th>5-day move</th><th>Main driver</th><th>Flagged</th><th>Lead</th><th>Futures-only rule</th></tr>${eps.map(e => `<tr><td>${fmtD(DAYS[e.i])}</td><td>${bp(Math.round(e.mv * 100))}bp</td><td style="text-align:right">${e.driver}</td><td>${e.hit ? '<span style="color:var(--good-text)">✓ Yes</span>' : '<span style="color:var(--crit)">✕ Missed</span>'}</td><td>${e.hit ? e.lead + (e.lead > 1 ? ' days' : ' day') : '—'}</td><td>${e.fut ? '✓' : '✕'}</td></tr>`).join('')}</table>`;
+}
+function renderBtChart(eps) {
+  const el = $('#btChart'), s = SERIES[tenor], w = W(el), h = 300, m = { l: 40, r: 10, t: 12, b: 26 };
+  const lo = Math.min(...s.map(p => p.v)), hi = Math.max(...s.map(p => p.v)), step = 0.5;
+  const yMin = Math.floor(lo / step) * step, yMax = Math.ceil(hi / step) * step;
+  const x = i => m.l + i / (s.length - 1) * (w - m.l - m.r), y = v => m.t + (yMax - v) / (yMax - yMin) * (h - m.t - m.b);
+  let g = '';
+  for (let v = yMin; v <= yMax + 1e-9; v += step) g += `<line x1="${m.l}" x2="${w - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(1)}%</text>`;
+  ['2022-01-03', '2022-03-01', '2022-05-02', '2022-07-01', '2022-09-01', '2022-11-01'].forEach(d => { const i = idx(d); g += `<text x="${x(i)}" y="${h - 6}" text-anchor="${i ? 'middle' : 'start'}">${new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' })}</text>`; });
+  eps.forEach(e => { g += `<rect x="${x(e.i)}" y="${m.t}" width="${x(e.i + 5) - x(e.i)}" height="${h - m.t - m.b}" fill="var(--accent-wash)"/>`; });
+  g += `<polyline fill="none" stroke="var(--ink2)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="${s.map((p, i) => `${x(i).toFixed(1)},${y(p.v).toFixed(1)}`).join(' ')}"/>`;
+  eps.forEach(e => {
+    if (e.hit) { const f = Math.max(0, e.i - e.lead); g += `<circle cx="${x(f)}" cy="${y(s[f].v)}" r="5" fill="var(--accent)" stroke="var(--card)" stroke-width="2"/>`; }
+    else g += `<circle cx="${x(e.i)}" cy="${y(s[e.i].v)}" r="5" fill="var(--card)" stroke="var(--crit)" stroke-width="2"/>`;
+  });
+  g += `<line id="xh" y1="${m.t}" y2="${h - m.b}" stroke="var(--axis)" visibility="hidden"/><circle id="xd" r="4" fill="var(--ink)" stroke="var(--card)" stroke-width="2" visibility="hidden"/>`;
+  g += `<rect data-xhair x="${m.l}" y="${m.t}" width="${w - m.l - m.r}" height="${h - m.t - m.b}" fill="transparent"/>`;
+  el.innerHTML = `<svg width="${w}" height="${h}" role="img" aria-label="${tenor} in 2022 with flagged moves">${g}</svg>`;
+  const svg = el.firstChild, xh = $('#xh', svg), xd = $('#xd', svg), ov = $('[data-xhair]', svg);
+  ov.addEventListener('pointermove', ev => {
+    const r = svg.getBoundingClientRect(), i = Math.max(0, Math.min(s.length - 1, Math.round((ev.clientX - r.left - m.l) / (w - m.l - m.r) * (s.length - 1))));
+    xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); xh.setAttribute('visibility', 'visible');
+    xd.setAttribute('cx', x(i)); xd.setAttribute('cy', y(s[i].v)); xd.setAttribute('visibility', 'visible');
+    const ep = eps.find(e => i >= e.i && i <= e.i + 5), fl = eps.find(e => e.hit && i === Math.max(0, e.i - e.lead));
+    let html = `<b>${s[i].v.toFixed(2)}%</b> <span class="m">${fmtD(s[i].d)}</span>`;
+    if (fl) html += `<br>Flagged ${fl.mv > 0 ? 'upward' : 'downward'} move, ${fl.lead} day${fl.lead > 1 ? 's' : ''} early · ${fl.driver}`;
+    if (ep) html += `<br><span class="m">Material move:</span> <b>${bp(Math.round(ep.mv * 100))}bp</b> <span class="m">in 5 days, ${ep.hit ? 'flagged' : 'missed'}</span>`;
+    showTip(html, ev.clientX, ev.clientY);
+  });
+  ov.addEventListener('pointerleave', () => { xh.setAttribute('visibility', 'hidden'); xd.setAttribute('visibility', 'hidden'); tip.hidden = true; });
+}
+function renderFp() {
+  const el = $('#fpChart'), w = W(el), h = 200, m = { l: 26, r: 8, t: 14, b: 24 }, yMax = 12;
+  const y = v => m.t + (yMax - v) / yMax * (h - m.t - m.b), band = (w - m.l - m.r) / FP.length, bw = Math.max(2, Math.min(10, band - 2));
+  let g = '';
+  for (let v = 0; v <= yMax; v += 4) g += `<line x1="${m.l}" x2="${w - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${v ? 'var(--grid)' : 'var(--axis)'}"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  FP.forEach((v, i) => { const x0 = m.l + band * i + (band - bw) / 2; g += `<path d="${barPath(x0, y(0), y(v), bw, 2)}" fill="var(--accent)"/><rect class="hit" x="${m.l + band * i}" y="${m.t}" width="${band}" height="${h - m.t - m.b}" data-tip="${esc(`<b>${v}</b> <span class="m">false alarms, week of ${fmtD(DAYS[Math.min(DAYS.length - 1, i * 5)])}</span>`)}"/>`; });
+  g += `<line x1="${m.l}" x2="${w - m.r}" y1="${y(10)}" y2="${y(10)}" stroke="var(--crit)" stroke-dasharray="4 3"/><text x="${w - m.r}" y="${y(10) - 5}" text-anchor="end" style="fill:var(--crit)">Tolerance: 10 a week</text>`;
+  ['Jan', 'Apr', 'Jul', 'Oct'].forEach((l, k) => { g += `<text x="${m.l + band * k * 13}" y="${h - 6}">${l}</text>`; });
+  el.innerHTML = `<svg width="${w}" height="${h}" role="img" aria-label="False alarms per week">${g}</svg>`;
+}
+
+/* ---------- tabs ---------- */
+const RENDER = { today: renderToday, exposure: renderExposure, backtest: renderBacktest };
+let current = 'today';
+function show(tab) {
+  if (!RENDER[tab]) tab = 'today';
+  current = tab;
+  document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab));
+  Object.keys(RENDER).forEach(k => { $('#' + k).hidden = k !== tab; });
+  RENDER[tab]();
+}
+document.querySelector('nav.tabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) { history.replaceState(null, '', '#' + b.dataset.tab); show(b.dataset.tab); } });
+$('#tenorSeg').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; tenor = b.dataset.t; document.querySelectorAll('#tenorSeg button').forEach(x => x.setAttribute('aria-pressed', x === b)); renderBacktest(); });
+let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (current === 'today') renderCurve(); else if (current === 'exposure') renderLadder(); else renderBacktest(); }, 120); });
+show(location.hash.slice(1));
+</script>
+</body>
+</html>
