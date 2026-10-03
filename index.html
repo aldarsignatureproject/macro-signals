@@ -6,7 +6,7 @@
 <title>Aldar Macro Signals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
 <script>
 try{if(localStorage.getItem('ms-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}
 </script>
@@ -68,6 +68,8 @@ nav.tabs button:hover{color:var(--header-ink)}
 .meta-row strong{margin-right:4px}
 .pill,.theme-btn{display:inline-block;padding:2px 10px;border-radius:999px;background:transparent;border:1px solid var(--header-ink2);font:inherit;font-size:11px;font-weight:400;color:var(--header-ink2)}
 .theme-btn{cursor:pointer;color:var(--header-ink);border-color:var(--header-ink)}
+a.pill{text-decoration:none;color:var(--header-ink)}
+a.pill:hover{border-color:var(--header-ink)}
 .theme-btn:hover{background:var(--header-ink);color:var(--header)}
 @media (max-width:760px){header.top{position:static}.meta{margin-left:0;text-align:left;width:100%;padding-top:0}.meta-row{justify-content:flex-start}nav.tabs{order:3;width:100%;min-height:42px}}
 .synthetic{font-size:12px;font-weight:300;color:var(--muted);padding:10px 0 0}
@@ -278,7 +280,7 @@ footer{font-size:12px;font-weight:300;color:var(--muted);padding:20px 0 36px;bor
       <button role="tab" data-tab="exposure" aria-selected="false">Aldar exposure</button>
     </nav>
     <div class="meta">
-      <div class="meta-row"><strong>Daily digest · Thursday 1 October 2026</strong><span class="pill">NYU Stern prototype</span><button type="button" class="theme-btn" id="themeBtn">Light mode</button></div>
+      <div class="meta-row"><strong>Daily digest · Thursday 1 October 2026</strong><a class="pill" href="digests/email-preview.html">Email digest</a><a class="pill" href="digests/teams-preview.html">Teams card</a><span class="pill">NYU Stern prototype</span><button type="button" class="theme-btn" id="themeBtn">Light mode</button></div>
       Generated 06:30 GST · covers 30 Sep 06:30 to 1 Oct 06:30
     </div>
   </div>
@@ -607,7 +609,7 @@ function renderToday() {
   $('#tiles').innerHTML = [
     ['Funding cost, net of cash', `${aed(debt - cash)}m`, `AED a year · debt ${aed(debt)}m, cash ${aed(cash)}m`],
     ['Aldar credit spread', `${bp(-6)}bp`, 'Expected over 5 days'],
-    ['Alerts sent', alerts, 'Email and Teams, FRM and HoT'],
+    ['Alerts sent', alerts, '<a href="digests/email-preview.html">Email</a> and <a href="digests/teams-preview.html">Teams</a>, FRM and HoT'],
     ['False alarms this week', `${fpUsed} of 10`, `<div class="meter"><i style="width:${fpUsed * 10}%"></i></div>`],
   ].map(([l, v, d]) => `<div class="kpi"><div><div class="lbl">${l}</div><div class="dl">${d}</div></div><div class="val">${v}</div></div>`).join('');
 

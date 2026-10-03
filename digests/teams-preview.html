@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teams digest preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#000;font:14px/1.5 Poppins,'Helvetica Neue',Arial,sans-serif;color:#F0F1EF}
+.nav{max-width:820px;margin:0 auto;padding:16px 16px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.nav img{height:30px;filter:invert(1);margin-right:8px}.nav a{color:#D7D1CA;text-decoration:none;border:1px solid #2a2a29;border-radius:999px;padding:4px 14px;font-size:13px}.nav a:hover{border-color:#D7D1CA}.nav a[aria-current]{background:#F0F1EF;color:#000;border-color:#F0F1EF;font-weight:600}
+.note{max-width:820px;margin:14px auto 0;padding:0 16px;font-size:12.5px;font-weight:300;color:#8f9191}
+.note b{color:#D7D1CA;font-weight:600}
+.chan{max-width:820px;margin:12px auto 32px;background:#0d0d0c;border:1px solid #2a2a29;border-radius:16px;overflow:hidden}
+.chan-h{padding:12px 18px;border-bottom:1px solid #2a2a29;font-weight:600;display:flex;gap:10px;align-items:center}
+.chan-h span{font-weight:300;color:#8f9191;font-size:12.5px}
+.post{padding:16px 18px 20px;display:flex;gap:12px;background:#0d0d0c}
+.av{width:32px;height:32px;border-radius:50%;background:#D7D1CA;color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex:none}
+.msg{flex:1;min-width:0}
+.by{font-size:12.5px;font-weight:300;color:#8f9191;margin-bottom:6px} .by b{color:#F0F1EF;font-weight:600;margin-right:6px}
+.tag{display:inline-block;font-size:10.5px;border:1px solid #2a2a29;border-radius:999px;padding:0 7px;margin-right:6px;color:#8f9191}
+#card{background:#0d0d0c;border:1px solid #2a2a29;border-radius:14px;overflow:hidden}
+#card .ac-pushButton{border:1px solid #2a2a29 !important;background:transparent !important;color:#F0F1EF !important;border-radius:999px !important;font-family:Poppins,Arial,sans-serif !important;font-weight:400 !important;padding:6px 14px !important;font-size:13px !important;min-height:32px}
+#card .ac-pushButton:hover{border-color:#D7D1CA !important}
+#card a{color:#D7D1CA}
+#card .ac-actionSet{flex-wrap:wrap;row-gap:8px}
+.fallback{padding:16px;color:#EC6A5A}
+@media (max-width:520px){.post{padding:12px}.av{display:none}}
+</style></head><body>
+<nav class="nav"><img src="../aldar-logo.svg" alt="Aldar"><a href="../index.html">Dashboard</a><a href="email-preview.html">Email digest</a><a href="teams-preview.html" aria-current=page>Teams card</a></nav>
+<div class="note"><b>Mock Teams digest.</b> This is the Adaptive Card in teams-card.json, drawn with the official Adaptive Cards renderer in the dashboard's dark theme. In Teams itself the card follows each person's Teams theme and font. The "Why it scored" and "Show lower items" buttons work here and in Teams.</div>
+<div class="chan">
+  <div class="chan-h">Treasury <span>· Macro Signals channel</span></div>
+  <div class="post"><div class="av">MS</div><div class="msg">
+    <div class="by"><b>Macro Signals (prototype)</b><span class="tag">App</span>Thu 1 Oct 06:31</div>
+    <div id="card"><div class="fallback">Card renderer did not load.</div></div>
+  </div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/adaptivecards@3.0.6/dist/adaptivecards.min.js"></script>
+<script>
+const CARD = {
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "msteams": {
+    "width": "Full"
+  },
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "verticalContentAlignment": "Center",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://aldarsignatureproject.github.io/macro-signals/aldar-logo-white.png",
+              "altText": "Aldar",
+              "width": "36px"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Group Treasury",
+              "wrap": true,
+              "size": "Small",
+              "isSubtle": true,
+              "spacing": "None"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Macro Signals · Thu 1 Oct",
+              "wrap": true,
+              "size": "Large",
+              "weight": "Bolder",
+              "spacing": "None"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "auto",
+          "verticalContentAlignment": "Bottom",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Synthetic data",
+              "wrap": true,
+              "size": "Small",
+              "color": "Warning",
+              "horizontalAlignment": "Right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "style": "emphasis",
+      "bleed": true,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "verticalContentAlignment": "Center",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "+10bp",
+                  "wrap": true,
+                  "size": "ExtraLarge",
+                  "weight": "Bolder",
+                  "spacing": "None"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "3M EIBOR, next 5 days",
+                  "wrap": false,
+                  "size": "Small",
+                  "isSubtle": true,
+                  "spacing": "None"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "verticalContentAlignment": "Center",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "CBUAE liquidity drain and firm US inflation point to 3M EIBOR about 10bp higher over the next week, mostly unpriced. Aldar's credit picture improved after Moody's moved to a positive outlook.",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "FactSet",
+      "spacing": "Medium",
+      "facts": [
+        {
+          "title": "Funding cost, net of cash",
+          "value": "+AED 2.3m · per year · debt +25.0m, cash +22.7m"
+        },
+        {
+          "title": "Aldar credit spread",
+          "value": "−6bp · expected over 5 days"
+        },
+        {
+          "title": "False alarms this week",
+          "value": "4 of 10 · weekly limit agreed with Aldar"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "**Alerts** · 3 of 7 items scored 70 or more",
+      "wrap": true,
+      "spacing": "Large",
+      "separator": true
+    },
+    {
+      "type": "Container",
+      "separator": false,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "verticalContentAlignment": "Top",
+              "items": [
+                {
+                  "type": "Container",
+                  "style": "attention",
+                  "bleed": false,
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "86",
+                      "wrap": true,
+                      "weight": "Bolder",
+                      "size": "Medium",
+                      "horizontalAlignment": "Center",
+                      "color": "Attention",
+                      "spacing": "None"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "CBUAE · 30 Sep, 15:10 GST",
+                  "wrap": true,
+                  "size": "Small",
+                  "isSubtle": true,
+                  "spacing": "None"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "[CBUAE drains AED 18bn through its M-Bill auction, the largest since March](https://www.centralbank.ae/en/)",
+                  "wrap": true,
+                  "weight": "Bolder",
+                  "spacing": "Small"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "**For Aldar:** Tighter dirham liquidity tends to lift 3M EIBOR before any policy change, so Aldar's floating bank debt resets higher at the next fixing.",
+                  "wrap": true,
+                  "spacing": "Small"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "Expected move, bp: 3M +8 · 6M +6 · 1Y +4 · 2Y +2 · 3Y +1",
+                  "wrap": true,
+                  "size": "Small",
+                  "isSubtle": true,
+                  "spacing": "Small"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "id": "why0",
+          "isVisible": false,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "**Why it scored 86:** After six comparable drains since 2023, 3M EIBOR rose 5 to 11bp within five trading days (median +7bp).",
+              "wrap": true,
+              "size": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Source: [CBUAE, Monetary Bills auction results, 30 Sep 2026](https://www.centralbank.ae/en/)",
+              "wrap": true,
+              "size": "Small",
+              "isSubtle": true,
+              "spacing": "Small"
+            }
+          ]
+        },
+        {
+          "type": "ActionSet",
+          "spacing": "Small",
+          "actions": [
+            {
+              "type": "Action.ToggleVisibility",
+              "title": "Why it scored 86",
+              "targetElements": [
+                "why0"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "verticalContentAlignment": "Top",
+              "items": [
+                {
+                  "type": "Container",
+                  "style": "attention",
+                  "bleed": false,
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "78",
+                      "wrap": true,
+                      "weight": "Bolder",
+                      "size": "Medium",
+                      "horizontalAlignment": "Center",
+                      "color": "Attention",
+                      "spacing": "None"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Aldar & peer credit · 30 Sep, 19:40 GST",
+                  "wrap": true,
+                  "size": "Small",
+                  "isSubtle": true,
+                  "spacing": "None"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "[Moody's revises Aldar's outlook to positive, citing record sales and lower leverage](https://ratings.moodys.com/)",
+                  "wrap": true,
+                  "weight": "Bolder",
+                  "spacing": "Small"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "**For Aldar:** Supports tighter spreads on new Aldar bonds and bank facilities, a helpful backdrop for the AED 6.8bn maturing in 2029.",
+                  "wrap": true,
+                  "spacing": "Small"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "Aldar credit spread: −6bp over 5 days",
+                  "wrap": true,
+                  "size": "Small",
+                  "isSubtle": true,
+                  "spacing": "Small"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "id": "why1",
+          "isVisible": false,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "**Why it scored 78:** Names Aldar directly. Past positive outlook changes for GCC real estate issuers tightened spreads 4 to 12bp within a week.",
+              "wrap": true,
+              "size": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Source: [Moody's, rating action on Aldar Properties PJSC, 30 Sep 2026](https://ratings.moodys.com/)",
+              "wrap": true,
+              "size": "Small",
+              "isSubtle": true,
+              "spacing": "Small"
+            }
+          ]
+        },
+        {
+          "type": "ActionSet",
+          "spacing": "Small",
+          "actions": [
+            {
+              "type": "Action.ToggleVisibility",
+              "title": "Why it scored 78",
+              "targetElements": [
+                "why1"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "verticalContentAlignment": "Top",
+              "items": [
+                {
+                  "type": "Container",
+                  "style": "attention",
+                  "bleed": false,
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "74",
+                      "wrap": true,
+                      "weight": "Bolder",
+                      "size": "Medium",
+                      "horizontalAlignment": "Center",
+                      "color": "Attention",
+                      "spacing": "None"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Fed · 30 Sep, 16:30 GST",
+                  "wrap": true,
+                  "size": "Small",
+                  "isSubtle": true,
+                  "spacing": "None"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "[US core PCE comes in at 2.9%, above forecast; Fed's Waller sees \"no urgency\" to cut](https://www.federalreserve.gov/)",
+                  "wrap": true,
+                  "weight": "Bolder",
+                  "spacing": "Small"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "**For Aldar:** A slower Fed path lifts the 1Y to 5Y part of the curve most, and the dirham peg carries it into CBUAE policy.",
+                  "wrap": true,
+                  "spacing": "Small"
+                },
+                {
+                  "type": "TextBlock",
+                  "text": "Expected move, bp: 3M +2 · 6M +3 · 1Y +5 · 2Y +7 · 3Y +6 · 5Y +5 · 7Y +4 · 10Y +3",
+                  "wrap": true,
+                  "size": "Small",
+                  "isSubtle": true,
+                  "spacing": "Small"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "id": "why2",
+          "isVisible": false,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "**Why it scored 74:** Comparable days since 2023 moved the AED 2Y swap up 4 to 9bp over five days. About half of that is already priced.",
+              "wrap": true,
+              "size": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Source: [BEA, Personal Income and Outlays, Aug 2026; Federal Reserve, Waller speech, 30 Sep 2026](https://www.federalreserve.gov/)",
+              "wrap": true,
+              "size": "Small",
+              "isSubtle": true,
+              "spacing": "Small"
+            }
+          ]
+        },
+        {
+          "type": "ActionSet",
+          "spacing": "Small",
+          "actions": [
+            {
+              "type": "Action.ToggleVisibility",
+              "title": "Why it scored 74",
+              "targetElements": [
+                "why2"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "**Suggested actions** · for review by FRM and Head of Treasury",
+      "wrap": true,
+      "spacing": "Large",
+      "separator": true
+    },
+    {
+      "type": "Container",
+      "spacing": "Small",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "**Deposits:** Move surplus cash from overnight into 1 to 3 month deposits",
+          "wrap": true,
+          "spacing": "None"
+        },
+        {
+          "type": "TextBlock",
+          "text": "+AED 3.0m a year on AED 5bn · From: CBUAE M-Bill auction",
+          "wrap": true,
+          "size": "Small",
+          "isSubtle": true,
+          "spacing": "None"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "spacing": "Small",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "**Hedging:** Consider fixing AED 2 to 3bn of floating debt through 3Y swaps before the 4 November FOMC",
+          "wrap": true,
+          "spacing": "None"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Avoids about AED 1.75m a year per 7bp on AED 2.5bn · From: CBUAE drain, US core PCE",
+          "wrap": true,
+          "size": "Small",
+          "isSubtle": true,
+          "spacing": "None"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "spacing": "Small",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "**Issuance timing:** Start early talks on refinancing the AED 6.8bn due in 2029",
+          "wrap": true,
+          "spacing": "None"
+        },
+        {
+          "type": "TextBlock",
+          "text": "About AED 3.4m a year saved per 5bp of spread · From: Moody's outlook, Emaar sukuk",
+          "wrap": true,
+          "size": "Small",
+          "isSubtle": true,
+          "spacing": "None"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "id": "others",
+      "isVisible": false,
+      "spacing": "Medium",
+      "separator": true,
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "**Below the alert threshold**",
+          "wrap": true,
+          "spacing": "None"
+        },
+        {
+          "type": "TextBlock",
+          "text": "61 · Aldar & peer credit · [Emaar prices a USD 750m five-year sukuk at T+95, eight times oversubscribed](https://www.emaar.com/)",
+          "wrap": true,
+          "size": "Small",
+          "spacing": "Small"
+        },
+        {
+          "type": "TextBlock",
+          "text": "52 · Oil · [Brent falls 3.1% to $71.40 as OPEC+ signals a larger November output increase](https://www.reuters.com/markets/commodities/)",
+          "wrap": true,
+          "size": "Small",
+          "spacing": "Small"
+        },
+        {
+          "type": "TextBlock",
+          "text": "48 · GCC fiscal · [Saudi Arabia widens its 2027 deficit estimate and plans USD 12bn of extra issuance](https://www.mof.gov.sa/en/)",
+          "wrap": true,
+          "size": "Small",
+          "spacing": "Small"
+        },
+        {
+          "type": "TextBlock",
+          "text": "24 · BoE · [Bank of England holds Bank Rate; two of nine members vote to cut](https://www.bankofengland.co.uk/)",
+          "wrap": true,
+          "size": "Small",
+          "spacing": "Small"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Open full digest",
+      "url": "https://aldarsignatureproject.github.io/macro-signals/#today"
+    },
+    {
+      "type": "Action.ToggleVisibility",
+      "title": "Show 4 lower items",
+      "targetElements": [
+        "others"
+      ]
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Report a miss",
+      "url": "https://aldarsignatureproject.github.io/macro-signals/#missed"
+    }
+  ]
+};
+const HOST = {"fontFamily": "Poppins, 'Helvetica Neue', Arial, sans-serif", "spacing": {"small": 4, "default": 8, "medium": 14, "large": 20, "extraLarge": 28, "padding": 16}, "separator": {"lineThickness": 1, "lineColor": "#232322"}, "fontSizes": {"small": 12, "default": 14, "medium": 16, "large": 18, "extraLarge": 30}, "fontWeights": {"lighter": 200, "default": 300, "bolder": 600}, "containerStyles": {"default": {"backgroundColor": "#0d0d0c", "foregroundColors": {"default": {"default": "#F0F1EF", "subtle": "#8f9191"}, "accent": {"default": "#D7D1CA", "subtle": "#D7D1CA"}, "attention": {"default": "#EC6A5A", "subtle": "#EC6A5A"}, "warning": {"default": "#E3B94F", "subtle": "#E3B94F"}, "good": {"default": "#7CC79A", "subtle": "#7CC79A"}, "dark": {"default": "#F0F1EF", "subtle": "#8f9191"}, "light": {"default": "#FFFFFF", "subtle": "#FFFFFF"}}}, "emphasis": {"backgroundColor": "#1a1a19", "foregroundColors": {"default": {"default": "#F0F1EF", "subtle": "#8f9191"}}}, "attention": {"backgroundColor": "#2a1614", "foregroundColors": {"attention": {"default": "#EC6A5A", "subtle": "#EC6A5A"}, "default": {"default": "#F0F1EF", "subtle": "#8f9191"}}}}, "actions": {"maxActions": 6, "spacing": "default", "buttonSpacing": 8, "showCard": {"actionMode": "inline"}, "actionsOrientation": "horizontal", "actionAlignment": "left"}, "factSet": {"title": {"weight": "bolder", "size": "default", "wrap": true, "maxWidth": 200}, "value": {"wrap": true}, "spacing": 10}, "supportsInteractivity": true};
+try {
+  const ac = new AdaptiveCards.AdaptiveCard();
+  ac.hostConfig = new AdaptiveCards.HostConfig(HOST);
+  AdaptiveCards.AdaptiveCard.onProcessMarkdown = (text, result) => {
+    const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    result.outputHtml = esc(text).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    result.didProcess = true;
+  };
+  ac.onExecuteAction = a => { if (a instanceof AdaptiveCards.OpenUrlAction) window.open(a.url, '_blank', 'noopener'); };
+  ac.parse(CARD);
+  const el = ac.render();
+  const host = document.getElementById('card'); host.innerHTML = ''; host.appendChild(el);
+} catch (err) { document.querySelector('.fallback').textContent = 'Card renderer error: ' + err.message; }
+</script>
+</body></html>
