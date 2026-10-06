@@ -1,69 +1,318 @@
 {
-  "_note": "Synthetic data, copied from the Today view of the prototype page. In the real build this file is what the scoring step writes each morning, and build_digests.py turns it into the email and the Teams card.",
-  "page_url": "https://aldarsignatureproject.github.io/macro-signals/",
-  "date_long": "Thursday 1 October 2026",
-  "date_short": "Thu 1 Oct",
-  "generated": "06:30 GST",
-  "window": "30 Sep 06:30 to 1 Oct 06:30",
-  "headline_bp": 10,
-  "headline_cap": "Expected move in 3M EIBOR over the next 5 trading days, all signals combined",
-  "read": "Short-end pressure is building. A CBUAE liquidity drain and firm US inflation data point to 3M EIBOR rising about 10bp over the next week, and SOFR futures price only a small part of that. The long end moves less, as weaker oil offsets Fed repricing. Aldar's own credit picture improved: Moody's moved its outlook to positive and a peer sukuk priced tight.",
-  "read_short": "CBUAE liquidity drain and firm US inflation point to 3M EIBOR about 10bp higher over the next week, mostly unpriced. Aldar's credit picture improved after Moody's moved to a positive outlook.",
-  "kpis": [
-    {"label": "Funding cost, net of cash", "value": "+AED 2.3m", "note": "per year · debt +25.0m, cash +22.7m"},
-    {"label": "Aldar credit spread", "value": "-6bp", "note": "expected over 5 days"},
-    {"label": "Alerts", "value": "3", "note": "score 70 and above"},
-    {"label": "False alarms this week", "value": "4 of 10", "note": "weekly limit agreed with Aldar"}
-  ],
-  "tenors": ["3M", "6M", "1Y", "2Y", "3Y", "5Y", "7Y", "10Y"],
-  "curve_platform": [10, 9, 9, 7, 6, 4, 5, 4],
-  "curve_priced": [2, 2, 3, 4, 3, 2, 1, 1],
-  "scanned": 41,
-  "kept": 7,
-  "alert_threshold": 70,
+ "_note": "Built by run_daily.py on 2026-10-06 11:08 GST. Items and market moves: synthetic. SOFR baseline: futures workbook as of 2026-09-30. Classifier: mock.",
+ "page_url": "https://aldarsignatureproject.github.io/macro-signals/",
+ "date": "2026-10-01",
+ "date_long": "Thursday 1 October 2026",
+ "date_short": "Thu 1 Oct",
+ "generated": "06:30 GST",
+ "window": "30 Sep 06:30 to 1 Oct 06:30",
+ "headline_bp": 13,
+ "headline_cap": "Expected move in 3M EIBOR over the next 5 trading days, all signals combined",
+ "read": "3 alerts from 11 items scanned. 3M EIBOR is expected +13bp over 5 days (+2bp of it is EIBOR catching up with SOFR futures, +11bp is news the market hasn't priced). 10Y is expected -1bp. Aldar's spread is expected -16bp.",
+ "read_short": "3 alerts from 11 items scanned. 3M EIBOR is expected +13bp over 5 days (+2bp of it is EIBOR catching up with SOFR futures, +11bp is news the market hasn't priced).",
+ "kpis": [
+  {
+   "label": "Funding cost, net of cash",
+   "value": "+AED 2.9m",
+   "note": "per year · debt +31.7m, cash +28.8m"
+  },
+  {
+   "label": "Aldar credit spread",
+   "value": "-16bp",
+   "note": "expected over 5 days"
+  },
+  {
+   "label": "Alerts",
+   "value": "3",
+   "note": "score 70 and above"
+  },
+  {
+   "label": "False alarms this week",
+   "value": "4 of 10",
+   "note": "weekly limit agreed with Aldar"
+  }
+ ],
+ "tenors": [
+  "3M",
+  "6M",
+  "1Y",
+  "2Y",
+  "3Y",
+  "5Y",
+  "7Y",
+  "10Y"
+ ],
+ "curve_platform": [
+  13,
+  10,
+  8,
+  4,
+  4,
+  1,
+  0,
+  -1
+ ],
+ "curve_priced": [
+  3,
+  2,
+  2,
+  4,
+  3,
+  2,
+  1,
+  1
+ ],
+ "scanned": 11,
+ "kept": 5,
+ "alert_threshold": 70,
+ "alerts": [
+  {
+   "driver": "Aldar & peer credit",
+   "time": "30 Sep, 19:40",
+   "score": 89,
+   "title": "A rating agency revises Aldar's outlook to positive, citing record sales and lower leverage",
+   "url": "https://news.example/rating-aldar",
+   "impl": "Supports tighter spreads on new Aldar bonds and bank facilities.",
+   "why": "Names Aldar directly and signals a possible upgrade within 12 to 18 months. Expected spread move -10bp, of which +0bp already showed in Aldar's bond spread.",
+   "cite": "Rating agency, 2026-09-30",
+   "spread": -10
+  },
+  {
+   "driver": "Aldar & peer credit",
+   "time": "30 Sep, 17:05",
+   "score": 77,
+   "title": "A UAE peer developer prices a USD 750m five-year sukuk at T+95, eight times oversubscribed",
+   "url": "https://news.example/peer-sukuk",
+   "impl": "Sets a tight new peer benchmark for any Aldar senior issuance.",
+   "why": "A large peer deal priced 30bp inside guidance. Expected spread move -6bp, of which +0bp already showed in Aldar's bond spread.",
+   "cite": "Peer developer disclosure, 2026-09-30",
+   "spread": -6
+  },
+  {
+   "driver": "CBUAE",
+   "time": "30 Sep, 15:10",
+   "score": 73,
+   "title": "CBUAE drains AED 18bn through its M-Bill auction, the largest since March",
+   "url": "https://news.example/cbuae-mbill",
+   "impl": "Tighter dirham liquidity tends to lift 3M EIBOR before any policy change, so Aldar's floating bank debt resets higher at the next fixing.",
+   "why": "Net drain of AED 7bn, the largest since March, with overnight interbank rates already 6bp higher. Largest expected move +12bp at 3M; EIBOR fixings already moved +2bp of it, leaving +10bp unpriced.",
+   "cite": "Central bank release, 2026-09-30",
+   "move": [
+    12,
+    9,
+    6,
+    3,
+    2,
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "others": [
+  {
+   "driver": "Fed",
+   "score": 45,
+   "title": "US core PCE comes in at 2.9%, above forecast; a Fed governor sees \"no urgency\" to cut",
+   "url": "https://news.example/pce"
+  },
+  {
+   "driver": "Oil",
+   "score": 29,
+   "title": "Brent falls 3.1% to $71.40 as OPEC+ signals a larger November output increase",
+   "url": "https://news.example/brent"
+  }
+ ],
+ "actions": [
+  {
+   "type": "Deposits",
+   "title": "Keep surplus cash on short placements until the expected rise shows in deposit rates",
+   "impact": "About AED 1.4m over a 3-month term on AED 5bn",
+   "from": "CBUAE, US data and Fed"
+  },
+  {
+   "type": "Issuance window",
+   "title": "Issuance window is improving: worth asking banks for indicative pricing on the AED 6.8bn due in 2029",
+   "impact": "About AED 3.4m a year per 5bp of spread on AED 6.8bn",
+   "from": "Credit news"
+  }
+ ],
+ "market": [
+  {
+   "name": "Spot SOFR",
+   "value": "3.88%",
+   "chg": "as of 30 Sep"
+  },
+  {
+   "name": "SOFR futures, 1Y avg",
+   "value": "4.42%",
+   "chg": "+54bp vs spot"
+  },
+  {
+   "name": "3M EIBOR (synthetic)",
+   "value": "4.12%",
+   "chg": "+4bp"
+  },
+  {
+   "name": "Brent (synthetic)",
+   "value": "$71.40",
+   "chg": "-3.1%"
+  }
+ ],
+ "items": [
+  {
+   "driver": "Aldar & peer credit",
+   "time": "30 Sep, 19:40",
+   "score": 89,
+   "title": "A rating agency revises Aldar's outlook to positive, citing record sales and lower leverage",
+   "url": "https://news.example/rating-aldar",
+   "impl": "Supports tighter spreads on new Aldar bonds and bank facilities.",
+   "why": "Names Aldar directly and signals a possible upgrade within 12 to 18 months. Expected spread move -10bp, of which +0bp already showed in Aldar's bond spread.",
+   "cite": "Rating agency, 2026-09-30",
+   "spread": -10,
+   "id": "rating-aldar",
+   "source": "Rating agency",
+   "summary": "The agency points to record development sales, growing recurring income and net debt to EBITDA of 1.4x. It says an upgrade is possible within 12 to 18 months.",
+   "check": [
+    "New",
+    "Expected spread move -10bp, of which +0bp already showed in Aldar's bond spread."
+   ]
+  },
+  {
+   "driver": "Aldar & peer credit",
+   "time": "30 Sep, 17:05",
+   "score": 77,
+   "title": "A UAE peer developer prices a USD 750m five-year sukuk at T+95, eight times oversubscribed",
+   "url": "https://news.example/peer-sukuk",
+   "impl": "Sets a tight new peer benchmark for any Aldar senior issuance.",
+   "why": "A large peer deal priced 30bp inside guidance. Expected spread move -6bp, of which +0bp already showed in Aldar's bond spread.",
+   "cite": "Peer developer disclosure, 2026-09-30",
+   "spread": -6,
+   "id": "peer-sukuk",
+   "source": "Peer developer disclosure",
+   "summary": "Final pricing came 30bp inside initial guidance on an order book above USD 6bn, two thirds from international investors.",
+   "check": [
+    "New",
+    "Expected spread move -6bp, of which +0bp already showed in Aldar's bond spread."
+   ]
+  },
+  {
+   "driver": "CBUAE",
+   "time": "30 Sep, 15:10",
+   "score": 73,
+   "title": "CBUAE drains AED 18bn through its M-Bill auction, the largest since March",
+   "url": "https://news.example/cbuae-mbill",
+   "impl": "Tighter dirham liquidity tends to lift 3M EIBOR before any policy change, so Aldar's floating bank debt resets higher at the next fixing.",
+   "why": "Net drain of AED 7bn, the largest since March, with overnight interbank rates already 6bp higher. Largest expected move +12bp at 3M; EIBOR fixings already moved +2bp of it, leaving +10bp unpriced.",
+   "cite": "Central bank release, 2026-09-30",
+   "move": [
+    12,
+    9,
+    6,
+    3,
+    2,
+    0,
+    0,
+    0
+   ],
+   "id": "cbuae-mbill",
+   "source": "Central bank release",
+   "summary": "The 1-month and 3-month Monetary Bills auction absorbed AED 18bn of bank reserves against AED 11bn maturing. Overnight interbank rates closed 6bp higher.",
+   "check": [
+    "New",
+    "Largest expected move +12bp at 3M; EIBOR fixings already moved +2bp of it, leaving +10bp unpriced."
+   ]
+  },
+  {
+   "driver": "Fed",
+   "time": "30 Sep, 16:30",
+   "score": 45,
+   "title": "US core PCE comes in at 2.9%, above forecast; a Fed governor sees \"no urgency\" to cut",
+   "url": "https://news.example/pce",
+   "impl": "A slower Fed path lifts the 1Y to 5Y part of the curve most, and the dirham peg carries it into CBUAE policy.",
+   "why": "An inflation surprise and a hawkish Fed speaker on the same day. Largest expected move +6.6bp at 2Y; SOFR futures already moved +2.7bp of it, leaving +3.9bp unpriced.",
+   "cite": "US statistics release, 2026-09-30",
+   "move": [
+    2,
+    3,
+    5,
+    7,
+    6,
+    5,
+    4,
+    3
+   ],
+   "id": "pce-waller",
+   "source": "US statistics release",
+   "summary": "August core PCE rose 0.3% on the month against 0.2% expected. A Fed governor said later that further cuts can wait until inflation progress resumes.",
+   "check": [
+    "Partly priced",
+    "Largest expected move +6.6bp at 2Y; SOFR futures already moved +2.7bp of it, leaving +3.9bp unpriced."
+   ]
+  },
+  {
+   "driver": "Oil",
+   "time": "30 Sep, 21:20",
+   "score": 29,
+   "title": "Brent falls 3.1% to $71.40 as OPEC+ signals a larger November output increase",
+   "url": "https://news.example/brent",
+   "impl": "Lower oil eases inflation expectations and nudges long-end yields down.",
+   "why": "Biggest one-day drop in Brent since July. Largest expected move -3bp at 10Y; US Treasury yields already moved +0bp of it, leaving -3bp unpriced.",
+   "cite": "Wire service, 2026-09-30",
+   "move": [
+    0,
+    0,
+    -1,
+    -1,
+    -1,
+    -2,
+    -2,
+    -3
+   ],
+   "id": "opec",
+   "source": "Wire service",
+   "summary": "Delegates said the group is weighing a second monthly increase. Brent posted its biggest one-day drop since July.",
+   "check": [
+    "New",
+    "Largest expected move -3bp at 10Y; US Treasury yields already moved +0bp of it, leaving -3bp unpriced."
+   ]
+  }
+ ],
+ "rate_call": {
+  "3M": 12.7,
+  "10Y": -0.6,
+  "passthrough_3M": 1.9,
+  "news_3M": 10.8,
   "alerts": [
-    {"driver": "CBUAE", "time": "30 Sep, 15:10", "score": 86,
-     "title": "CBUAE drains AED 18bn through its M-Bill auction, the largest since March",
-     "url": "https://www.centralbank.ae/en/",
-     "impl": "Tighter dirham liquidity tends to lift 3M EIBOR before any policy change, so Aldar's floating bank debt resets higher at the next fixing.",
-     "move": [8, 6, 4, 2, 1, 0, 0, 0],
-     "why": "After six comparable drains since 2023, 3M EIBOR rose 5 to 11bp within five trading days (median +7bp).",
-     "cite": "CBUAE, Monetary Bills auction results, 30 Sep 2026"},
-    {"driver": "Aldar & peer credit", "time": "30 Sep, 19:40", "score": 78,
-     "title": "Moody's revises Aldar's outlook to positive, citing record sales and lower leverage",
-     "url": "https://ratings.moodys.com/",
-     "impl": "Supports tighter spreads on new Aldar bonds and bank facilities, a helpful backdrop for the AED 6.8bn maturing in 2029.",
-     "spread": -6,
-     "why": "Names Aldar directly. Past positive outlook changes for GCC real estate issuers tightened spreads 4 to 12bp within a week.",
-     "cite": "Moody's, rating action on Aldar Properties PJSC, 30 Sep 2026"},
-    {"driver": "Fed", "time": "30 Sep, 16:30", "score": 74,
-     "title": "US core PCE comes in at 2.9%, above forecast; Fed's Waller sees \"no urgency\" to cut",
-     "url": "https://www.federalreserve.gov/",
-     "impl": "A slower Fed path lifts the 1Y to 5Y part of the curve most, and the dirham peg carries it into CBUAE policy.",
-     "move": [2, 3, 5, 7, 6, 5, 4, 3],
-     "why": "Comparable days since 2023 moved the AED 2Y swap up 4 to 9bp over five days. About half of that is already priced.",
-     "cite": "BEA, Personal Income and Outlays, Aug 2026; Federal Reserve, Waller speech, 30 Sep 2026"}
-  ],
-  "others": [
-    {"driver": "Aldar & peer credit", "score": 61, "title": "Emaar prices a USD 750m five-year sukuk at T+95, eight times oversubscribed", "url": "https://www.emaar.com/"},
-    {"driver": "Oil", "score": 52, "title": "Brent falls 3.1% to $71.40 as OPEC+ signals a larger November output increase", "url": "https://www.reuters.com/markets/commodities/"},
-    {"driver": "GCC fiscal", "score": 48, "title": "Saudi Arabia widens its 2027 deficit estimate and plans USD 12bn of extra issuance", "url": "https://www.mof.gov.sa/en/"},
-    {"driver": "BoE", "score": 24, "title": "Bank of England holds Bank Rate; two of nine members vote to cut", "url": "https://www.bankofengland.co.uk/"}
-  ],
-  "actions": [
-    {"type": "Deposits", "title": "Move surplus cash from overnight into 1 to 3 month deposits",
-     "impact": "+AED 3.0m a year on AED 5bn", "from": "CBUAE M-Bill auction"},
-    {"type": "Hedging", "title": "Consider fixing AED 2 to 3bn of floating debt through 3Y swaps before the 4 November FOMC",
-     "impact": "Avoids about AED 1.75m a year per 7bp on AED 2.5bn", "from": "CBUAE drain, US core PCE"},
-    {"type": "Issuance timing", "title": "Start early talks on refinancing the AED 6.8bn due in 2029",
-     "impact": "About AED 3.4m a year saved per 5bp of spread", "from": "Moody's outlook, Emaar sukuk"}
-  ],
-  "market": [
-    {"name": "3M EIBOR", "value": "3.62%", "chg": "+4bp"},
-    {"name": "3M Term SOFR", "value": "3.48%", "chg": "+1bp"},
-    {"name": "EIBOR-SOFR spread", "value": "14bp", "chg": "+3bp"},
-    {"name": "AED 10Y swap", "value": "3.95%", "chg": "+2bp"},
-    {"name": "US 10Y Treasury", "value": "4.06%", "chg": "+3bp"},
-    {"name": "Brent", "value": "$71.40", "chg": "-3.1%"}
+   "3M"
   ]
+ },
+ "spread_signal": null,
+ "actions_full": [
+  {
+   "type": "Deposits",
+   "title": "Keep surplus cash on short placements until the expected rise shows in deposit rates",
+   "body": "3M is expected +11bp higher than the market prices. Term deposits fixed today would miss it.",
+   "impact": "About AED 1.4m over a 3-month term on AED 5bn",
+   "from": "CBUAE, US data and Fed"
+  },
+  {
+   "type": "Issuance window",
+   "title": "Issuance window is improving: worth asking banks for indicative pricing on the AED 6.8bn due in 2029",
+   "body": "Aldar's spread is expected -16bp over 5 days. A watch item, since refinancing takes weeks.",
+   "impact": "About AED 3.4m a year per 5bp of spread on AED 6.8bn",
+   "from": "Credit news"
+  }
+ ],
+ "sofr_implied_curve": {
+  "3M": 4.0114,
+  "6M": 4.1639,
+  "1Y": 4.415,
+  "2Y": 4.5938,
+  "3Y": 4.6371,
+  "5Y": 4.6792,
+  "7Y": 4.7581,
+  "10Y": 4.8908
+ },
+ "sofr_strip_reach_years": 9.7
 }

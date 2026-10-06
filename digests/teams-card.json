@@ -77,7 +77,7 @@
               "items": [
                 {
                   "type": "TextBlock",
-                  "text": "+10bp",
+                  "text": "+13bp",
                   "wrap": true,
                   "size": "ExtraLarge",
                   "weight": "Bolder",
@@ -100,7 +100,7 @@
               "items": [
                 {
                   "type": "TextBlock",
-                  "text": "CBUAE liquidity drain and firm US inflation point to 3M EIBOR about 10bp higher over the next week, mostly unpriced. Aldar's credit picture improved after Moody's moved to a positive outlook.",
+                  "text": "3 alerts from 11 items scanned. 3M EIBOR is expected +13bp over 5 days (+2bp of it is EIBOR catching up with SOFR futures, +11bp is news the market hasn't priced).",
                   "wrap": true
                 }
               ]
@@ -115,11 +115,11 @@
       "facts": [
         {
           "title": "Funding cost, net of cash",
-          "value": "+AED 2.3m · per year · debt +25.0m, cash +22.7m"
+          "value": "+AED 2.9m · per year · debt +31.7m, cash +28.8m"
         },
         {
           "title": "Aldar credit spread",
-          "value": "−6bp · expected over 5 days"
+          "value": "−16bp · expected over 5 days"
         },
         {
           "title": "False alarms this week",
@@ -129,7 +129,7 @@
     },
     {
       "type": "TextBlock",
-      "text": "**Alerts** · 3 of 7 items scored 70 or more",
+      "text": "**Alerts** · 3 of 5 items scored 70 or more",
       "wrap": true,
       "spacing": "Large",
       "separator": true
@@ -154,7 +154,7 @@
                   "items": [
                     {
                       "type": "TextBlock",
-                      "text": "86",
+                      "text": "89",
                       "wrap": true,
                       "weight": "Bolder",
                       "size": "Medium",
@@ -172,7 +172,7 @@
               "items": [
                 {
                   "type": "TextBlock",
-                  "text": "CBUAE · 30 Sep, 15:10 GST",
+                  "text": "Aldar & peer credit · 30 Sep, 19:40 GST",
                   "wrap": true,
                   "size": "Small",
                   "isSubtle": true,
@@ -180,20 +180,20 @@
                 },
                 {
                   "type": "TextBlock",
-                  "text": "[CBUAE drains AED 18bn through its M-Bill auction, the largest since March](https://www.centralbank.ae/en/)",
+                  "text": "[A rating agency revises Aldar's outlook to positive, citing record sales and lower leverage](https://news.example/rating-aldar)",
                   "wrap": true,
                   "weight": "Bolder",
                   "spacing": "Small"
                 },
                 {
                   "type": "TextBlock",
-                  "text": "**For Aldar:** Tighter dirham liquidity tends to lift 3M EIBOR before any policy change, so Aldar's floating bank debt resets higher at the next fixing.",
+                  "text": "**For Aldar:** Supports tighter spreads on new Aldar bonds and bank facilities.",
                   "wrap": true,
                   "spacing": "Small"
                 },
                 {
                   "type": "TextBlock",
-                  "text": "Expected move, bp: 3M +8 · 6M +6 · 1Y +4 · 2Y +2 · 3Y +1",
+                  "text": "Aldar credit spread: −10bp over 5 days",
                   "wrap": true,
                   "size": "Small",
                   "isSubtle": true,
@@ -210,13 +210,13 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "**Why it scored 86:** After six comparable drains since 2023, 3M EIBOR rose 5 to 11bp within five trading days (median +7bp).",
+              "text": "**Why it scored 89:** Names Aldar directly and signals a possible upgrade within 12 to 18 months. Expected spread move -10bp, of which +0bp already showed in Aldar's bond spread.",
               "wrap": true,
               "size": "Small"
             },
             {
               "type": "TextBlock",
-              "text": "Source: [CBUAE, Monetary Bills auction results, 30 Sep 2026](https://www.centralbank.ae/en/)",
+              "text": "Source: [Rating agency, 2026-09-30](https://news.example/rating-aldar)",
               "wrap": true,
               "size": "Small",
               "isSubtle": true,
@@ -230,7 +230,7 @@
           "actions": [
             {
               "type": "Action.ToggleVisibility",
-              "title": "Why it scored 86",
+              "title": "Why it scored 89",
               "targetElements": [
                 "why0"
               ]
@@ -259,7 +259,7 @@
                   "items": [
                     {
                       "type": "TextBlock",
-                      "text": "78",
+                      "text": "77",
                       "wrap": true,
                       "weight": "Bolder",
                       "size": "Medium",
@@ -277,7 +277,7 @@
               "items": [
                 {
                   "type": "TextBlock",
-                  "text": "Aldar & peer credit · 30 Sep, 19:40 GST",
+                  "text": "Aldar & peer credit · 30 Sep, 17:05 GST",
                   "wrap": true,
                   "size": "Small",
                   "isSubtle": true,
@@ -285,14 +285,14 @@
                 },
                 {
                   "type": "TextBlock",
-                  "text": "[Moody's revises Aldar's outlook to positive, citing record sales and lower leverage](https://ratings.moodys.com/)",
+                  "text": "[A UAE peer developer prices a USD 750m five-year sukuk at T+95, eight times oversubscribed](https://news.example/peer-sukuk)",
                   "wrap": true,
                   "weight": "Bolder",
                   "spacing": "Small"
                 },
                 {
                   "type": "TextBlock",
-                  "text": "**For Aldar:** Supports tighter spreads on new Aldar bonds and bank facilities, a helpful backdrop for the AED 6.8bn maturing in 2029.",
+                  "text": "**For Aldar:** Sets a tight new peer benchmark for any Aldar senior issuance.",
                   "wrap": true,
                   "spacing": "Small"
                 },
@@ -315,13 +315,13 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "**Why it scored 78:** Names Aldar directly. Past positive outlook changes for GCC real estate issuers tightened spreads 4 to 12bp within a week.",
+              "text": "**Why it scored 77:** A large peer deal priced 30bp inside guidance. Expected spread move -6bp, of which +0bp already showed in Aldar's bond spread.",
               "wrap": true,
               "size": "Small"
             },
             {
               "type": "TextBlock",
-              "text": "Source: [Moody's, rating action on Aldar Properties PJSC, 30 Sep 2026](https://ratings.moodys.com/)",
+              "text": "Source: [Peer developer disclosure, 2026-09-30](https://news.example/peer-sukuk)",
               "wrap": true,
               "size": "Small",
               "isSubtle": true,
@@ -335,7 +335,7 @@
           "actions": [
             {
               "type": "Action.ToggleVisibility",
-              "title": "Why it scored 78",
+              "title": "Why it scored 77",
               "targetElements": [
                 "why1"
               ]
@@ -364,7 +364,7 @@
                   "items": [
                     {
                       "type": "TextBlock",
-                      "text": "74",
+                      "text": "73",
                       "wrap": true,
                       "weight": "Bolder",
                       "size": "Medium",
@@ -382,7 +382,7 @@
               "items": [
                 {
                   "type": "TextBlock",
-                  "text": "Fed · 30 Sep, 16:30 GST",
+                  "text": "CBUAE · 30 Sep, 15:10 GST",
                   "wrap": true,
                   "size": "Small",
                   "isSubtle": true,
@@ -390,20 +390,20 @@
                 },
                 {
                   "type": "TextBlock",
-                  "text": "[US core PCE comes in at 2.9%, above forecast; Fed's Waller sees \"no urgency\" to cut](https://www.federalreserve.gov/)",
+                  "text": "[CBUAE drains AED 18bn through its M-Bill auction, the largest since March](https://news.example/cbuae-mbill)",
                   "wrap": true,
                   "weight": "Bolder",
                   "spacing": "Small"
                 },
                 {
                   "type": "TextBlock",
-                  "text": "**For Aldar:** A slower Fed path lifts the 1Y to 5Y part of the curve most, and the dirham peg carries it into CBUAE policy.",
+                  "text": "**For Aldar:** Tighter dirham liquidity tends to lift 3M EIBOR before any policy change, so Aldar's floating bank debt resets higher at the next fixing.",
                   "wrap": true,
                   "spacing": "Small"
                 },
                 {
                   "type": "TextBlock",
-                  "text": "Expected move, bp: 3M +2 · 6M +3 · 1Y +5 · 2Y +7 · 3Y +6 · 5Y +5 · 7Y +4 · 10Y +3",
+                  "text": "Expected move, bp: 3M +12 · 6M +9 · 1Y +6 · 2Y +3 · 3Y +2",
                   "wrap": true,
                   "size": "Small",
                   "isSubtle": true,
@@ -420,13 +420,13 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "**Why it scored 74:** Comparable days since 2023 moved the AED 2Y swap up 4 to 9bp over five days. About half of that is already priced.",
+              "text": "**Why it scored 73:** Net drain of AED 7bn, the largest since March, with overnight interbank rates already 6bp higher. Largest expected move +12bp at 3M; EIBOR fixings already moved +2bp of it, leaving +10bp unpriced.",
               "wrap": true,
               "size": "Small"
             },
             {
               "type": "TextBlock",
-              "text": "Source: [BEA, Personal Income and Outlays, Aug 2026; Federal Reserve, Waller speech, 30 Sep 2026](https://www.federalreserve.gov/)",
+              "text": "Source: [Central bank release, 2026-09-30](https://news.example/cbuae-mbill)",
               "wrap": true,
               "size": "Small",
               "isSubtle": true,
@@ -440,7 +440,7 @@
           "actions": [
             {
               "type": "Action.ToggleVisibility",
-              "title": "Why it scored 74",
+              "title": "Why it scored 73",
               "targetElements": [
                 "why2"
               ]
@@ -462,13 +462,13 @@
       "items": [
         {
           "type": "TextBlock",
-          "text": "**Deposits:** Move surplus cash from overnight into 1 to 3 month deposits",
+          "text": "**Deposits:** Keep surplus cash on short placements until the expected rise shows in deposit rates",
           "wrap": true,
           "spacing": "None"
         },
         {
           "type": "TextBlock",
-          "text": "+AED 3.0m a year on AED 5bn · From: CBUAE M-Bill auction",
+          "text": "About AED 1.4m over a 3-month term on AED 5bn · From: CBUAE, US data and Fed",
           "wrap": true,
           "size": "Small",
           "isSubtle": true,
@@ -482,33 +482,13 @@
       "items": [
         {
           "type": "TextBlock",
-          "text": "**Hedging:** Consider fixing AED 2 to 3bn of floating debt through 3Y swaps before the 4 November FOMC",
+          "text": "**Issuance window:** Issuance window is improving: worth asking banks for indicative pricing on the AED 6.8bn due in 2029",
           "wrap": true,
           "spacing": "None"
         },
         {
           "type": "TextBlock",
-          "text": "Avoids about AED 1.75m a year per 7bp on AED 2.5bn · From: CBUAE drain, US core PCE",
-          "wrap": true,
-          "size": "Small",
-          "isSubtle": true,
-          "spacing": "None"
-        }
-      ]
-    },
-    {
-      "type": "Container",
-      "spacing": "Small",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "**Issuance timing:** Start early talks on refinancing the AED 6.8bn due in 2029",
-          "wrap": true,
-          "spacing": "None"
-        },
-        {
-          "type": "TextBlock",
-          "text": "About AED 3.4m a year saved per 5bp of spread · From: Moody's outlook, Emaar sukuk",
+          "text": "About AED 3.4m a year per 5bp of spread on AED 6.8bn · From: Credit news",
           "wrap": true,
           "size": "Small",
           "isSubtle": true,
@@ -531,28 +511,14 @@
         },
         {
           "type": "TextBlock",
-          "text": "61 · Aldar & peer credit · [Emaar prices a USD 750m five-year sukuk at T+95, eight times oversubscribed](https://www.emaar.com/)",
+          "text": "45 · Fed · [US core PCE comes in at 2.9%, above forecast; a Fed governor sees \"no urgency\" to cut](https://news.example/pce)",
           "wrap": true,
           "size": "Small",
           "spacing": "Small"
         },
         {
           "type": "TextBlock",
-          "text": "52 · Oil · [Brent falls 3.1% to $71.40 as OPEC+ signals a larger November output increase](https://www.reuters.com/markets/commodities/)",
-          "wrap": true,
-          "size": "Small",
-          "spacing": "Small"
-        },
-        {
-          "type": "TextBlock",
-          "text": "48 · GCC fiscal · [Saudi Arabia widens its 2027 deficit estimate and plans USD 12bn of extra issuance](https://www.mof.gov.sa/en/)",
-          "wrap": true,
-          "size": "Small",
-          "spacing": "Small"
-        },
-        {
-          "type": "TextBlock",
-          "text": "24 · BoE · [Bank of England holds Bank Rate; two of nine members vote to cut](https://www.bankofengland.co.uk/)",
+          "text": "29 · Oil · [Brent falls 3.1% to $71.40 as OPEC+ signals a larger November output increase](https://news.example/brent)",
           "wrap": true,
           "size": "Small",
           "spacing": "Small"
@@ -568,7 +534,7 @@
     },
     {
       "type": "Action.ToggleVisibility",
-      "title": "Show 4 lower items",
+      "title": "Show 2 lower items",
       "targetElements": [
         "others"
       ]

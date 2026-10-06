@@ -280,14 +280,14 @@ footer{font-size:12px;font-weight:300;color:var(--muted);padding:20px 0 36px;bor
       <button role="tab" data-tab="exposure" aria-selected="false">Aldar exposure</button>
     </nav>
     <div class="meta">
-      <div class="meta-row"><strong>Daily digest · Thursday 1 October 2026</strong><a class="pill" href="digests/email-preview.html">Email digest</a><a class="pill" href="digests/teams-preview.html">Teams card</a><span class="pill">NYU Stern prototype</span><button type="button" class="theme-btn" id="themeBtn">Light mode</button></div>
-      Generated 06:30 GST · covers 30 Sep 06:30 to 1 Oct 06:30
+      <div class="meta-row"><strong id="dTitle">Daily digest · Thursday 1 October 2026</strong><a class="pill" href="digests/email-preview.html">Email digest</a><a class="pill" href="digests/teams-preview.html">Teams card</a><span class="pill">NYU Stern prototype</span><button type="button" class="theme-btn" id="themeBtn">Light mode</button></div>
+      <span id="dWindow">Generated 06:30 GST · covers 30 Sep 06:30 to 1 Oct 06:30</span>
     </div>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="synthetic"><b>Synthetic data.</b> Headlines, market levels, and scores are illustrative only, created to review the design. Exposure figures use Aldar's H1 2026 investor presentation and the 25% fixed / 75% floating assumption.</div>
+  <div class="synthetic" id="dBanner"><b>Synthetic data.</b> Headlines, market levels, and scores are illustrative only, created to review the design. Exposure figures use Aldar's H1 2026 investor presentation and the 25% fixed / 75% floating assumption.</div>
   <main>
 
   <!-- ============ TODAY ============ -->
@@ -299,7 +299,7 @@ footer{font-size:12px;font-weight:300;color:var(--muted);padding:20px 0 36px;bor
         <div class="kicker">Today's read</div>
         <div class="hero-num" id="heroNum"></div>
         <div class="hero-cap">Expected move in 3M EIBOR over the next 5 trading days, all signals combined</div>
-        <p class="read">Short-end pressure is building. A CBUAE liquidity drain and firm US inflation data point to 3M EIBOR rising about 10bp over the next week, and SOFR futures price only a small part of that. The long end moves less, as weaker oil offsets Fed repricing. Aldar's own credit picture improved: Moody's moved its outlook to positive and a peer sukuk priced tight.</p>
+        <p class="read" id="dRead">Short-end pressure is building. A CBUAE liquidity drain and firm US inflation data point to 3M EIBOR rising about 10bp over the next week, and SOFR futures price only a small part of that. The long end moves less, as weaker oil offsets Fed repricing. Aldar's own credit picture improved: Moody's moved its outlook to positive and a peer sukuk priced tight.</p>
       </div>
 
       <div class="card c4 t-chart">
@@ -415,7 +415,7 @@ const DEBT = 33.3, FLOAT = 0.75, CASH = 22.7;
 const perBp = { debt: DEBT * FLOAT * 1000 / 1e4, cash: CASH * 1000 / 1e4 }; // AED m per year per 1bp
 const REFI = [{ y: 2029, amt: 6.8 }, { y: 2030, amt: 2.8 }];
 
-const ITEMS = [
+let ITEMS = [
   { id: 'cbuae-mbill', driver: 'CBUAE', time: '30 Sep, 15:10 GST', score: 86,
     title: 'CBUAE drains AED 18bn through its M-Bill auction, the largest since March',
     source: 'Central Bank of the UAE', url: 'https://www.centralbank.ae/en/',
@@ -473,10 +473,10 @@ const ITEMS = [
     why: 'BoE decisions in line with expectations have had no measurable effect on AED rates. The score stays low because the market had priced this outcome.',
     cite: 'Bank of England, Monetary Policy Summary, 30 Sep 2026' },
 ];
-const IMPLIED = [2,2,3,4,3,2,1,1];
-const NET = TENORS.map((_, i) => ITEMS.reduce((s, it) => s + (it.move ? it.move[i] : 0), 0));
+let IMPLIED = [2,2,3,4,3,2,1,1];
+let NET = TENORS.map((_, i) => ITEMS.reduce((s, it) => s + (it.move ? it.move[i] : 0), 0));
 
-const ACTIONS = [
+let ACTIONS = [
   { type: 'Deposits', title: 'Move surplus cash from overnight into 1 to 3 month deposits',
     body: 'Lock in the higher fixings expected after the CBUAE liquidity drain before banks reprice their deposit offers.',
     impact: '≈ +AED 3.0m a year on AED 5bn', from: 'CBUAE M-Bill auction' },
@@ -489,7 +489,7 @@ const ACTIONS = [
 ];
 
 function walk(seed, end, vol, n = 20) { const r = rng(seed), out = [end]; for (let i = 1; i < n; i++) out.unshift(out[0] - (r() - 0.48) * vol); return out; }
-const MARKET = [
+let MARKET = [
   { nm: '3M EIBOR', v: '3.62%', d: '+4bp', s: walk(1, 3.62, .03) },
   { nm: '3M Term SOFR', v: '3.48%', d: '+1bp', s: walk(2, 3.48, .02) },
   { nm: 'EIBOR–SOFR spread', v: '14bp', d: '+3bp', s: walk(3, 14, 1.4) },
@@ -537,7 +537,7 @@ function cellColor(v, full = 10) {
 // Paste the Google Apps Script web app URL here (setup steps in feedback-apps-script.gs).
 // Until then, feedback is kept in this browser only.
 const FEEDBACK_URL = 'https://script.google.com/macros/s/AKfycbyjGWQ1_5pLB0aK8e3hByBFOxAJ2C2FTkdjlxr073JYivANbkSKcc6DOlm-3IzYbsGd/exec';
-const DIGEST = '2026-10-01';
+let DIGEST = '2026-10-01';
 const REASONS = {
   signal: { up: ['Helps a decision today', 'Early warning', 'Clear explanation', 'Right direction and size'],
             down: ['Not relevant to Aldar', 'Already known or priced', 'Wrong direction', 'Size is off', 'Wrong tenor', 'Weak source'] },
@@ -605,15 +605,16 @@ function renderToday() {
   $('#heroNum').innerHTML = `${bp(n3m)}<small>bp</small>`;
   const debt = n3m * perBp.debt, cash = n3m * perBp.cash;
   const alerts = ITEMS.filter(i => i.score >= ALERT).length;
-  const fpUsed = 4;
+  const fpUsed = KPI ? parseInt(KPI[3].value) : 4;
+  const minus = v => v.replace('-', '−');
   $('#tiles').innerHTML = [
-    ['Funding cost, net of cash', `${aed(debt - cash)}m`, `AED a year · debt ${aed(debt)}m, cash ${aed(cash)}m`],
-    ['Aldar credit spread', `${bp(-6)}bp`, 'Expected over 5 days'],
+    KPI ? ['Funding cost, net of cash', minus(KPI[0].value), minus(KPI[0].note)] : ['Funding cost, net of cash', `${aed(debt - cash)}m`, `AED a year · debt ${aed(debt)}m, cash ${aed(cash)}m`],
+    ['Aldar credit spread', KPI ? minus(KPI[1].value) : `${bp(-6)}bp`, 'Expected over 5 days'],
     ['Alerts sent', alerts, '<a href="digests/email-preview.html">Email</a> and <a href="digests/teams-preview.html">Teams</a>, FRM and HoT'],
     ['False alarms this week', `${fpUsed} of 10`, `<div class="meter"><i style="width:${fpUsed * 10}%"></i></div>`],
   ].map(([l, v, d]) => `<div class="kpi"><div><div class="lbl">${l}</div><div class="dl">${d}</div></div><div class="val">${v}</div></div>`).join('');
 
-  $('#feedSub').textContent = `41 items scanned, ${ITEMS.length} kept after the market check, ${alerts} above the alert threshold of ${ALERT}.`;
+  $('#feedSub').textContent = `${SCANNED} items scanned, ${ITEMS.length} kept after the market check, ${alerts} above the alert threshold of ${ALERT}.`;
   $('#role').value = store.get('role') || '';
   renderActions(); renderFilters(); renderFeed(); renderMarket(); renderCurve(); renderProgress();
 }
@@ -697,7 +698,7 @@ function spark(vals, w = 120, h = 18) {
   return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--accent)" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linejoin="round" points="${vals.map((v, i) => `${x(i)},${y(v)}`).join(' ')}"/></svg>`;
 }
 function renderMarket() {
-  $('#mkt').innerHTML = MARKET.map(r => `<div class="tk" title="Close 30 Sep · change on the day · 20-day trend"><div class="nm">${r.nm}</div><div class="ln2"><span class="vv">${r.v}</span><span class="dd">${r.d}</span></div>${spark(r.s)}</div>`).join('');
+  $('#mkt').innerHTML = MARKET.map(r => `<div class="tk" title="Close 30 Sep · change on the day · 20-day trend"><div class="nm">${r.nm}</div><div class="ln2"><span class="vv">${r.v}</span><span class="dd">${r.d}</span></div>${r.s ? spark(r.s) : ''}</div>`).join('');
 }
 /* ---------- EXPOSURE ---------- */
 const LADDER = [['2026', [1.0, 0, 0]], ['2027', [0.7, 0, 0]], ['2028', [2.5, 0, 0]], ['2029', [5.0, 1.8, 0]], ['2030', [2.8, 0, 0]], ['2031+', [0.1, 6.6, 12.9]]];
@@ -765,10 +766,30 @@ function show(tab) {
 }
 document.querySelector('nav.tabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) { show(b.dataset.tab); try { history.replaceState(null, '', '#' + b.dataset.tab); } catch (err) {} } });
 let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (current === 'today') renderCurve(); else renderLadder(); }, 120); });
+/* ---------- engine output ----------
+   The scoring engine (run_daily.py) writes digests/digest-data.json each morning; the email and Teams
+   card are built from the same file. Without it (or opened from file://) the inline data above is shown. */
+let KPI = null, SCANNED = 41;
+async function loadDigest() {
+  try {
+    const d = await (await fetch('digests/digest-data.json', { cache: 'no-cache' })).json();
+    if (!d.items) return;                      // hand-made mock, not engine output
+    const clean = v => typeof v === 'string' ? esc(v) : Array.isArray(v) ? v.map(clean) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, k === 'driver' ? x : clean(x)])) : v;
+    ITEMS = clean(d.items); NET = d.curve_platform; IMPLIED = d.curve_priced; ACTIONS = clean(d.actions_full || d.actions);
+    KPI = d.kpis; SCANNED = d.scanned; DIGEST = d.date || d.date_long;
+    MARKET = d.market.map(m => ({ nm: m.name, v: m.value, d: m.chg.replace('-', '−') }));
+    $('#dTitle').textContent = `Daily digest · ${d.date_long}`;
+    $('#dWindow').textContent = `Generated ${d.generated}` + (d.window ? ` · covers ${d.window}` : '');
+    $('#dRead').textContent = d.read;
+    $('#dBanner').innerHTML = '<b>Prototype data.</b> Scored by the engine. Headlines and market moves are synthetic; the SOFR futures baseline is the team’s 30 Sep 2026 workbook. Exposure figures use Aldar’s H1 2026 investor presentation and the 25% fixed / 75% floating assumption.';
+  } catch (err) {}
+}
+loadDigest().then(() => {
 show(location.hash.slice(1));
 // Links from the email and Teams digest: #missed opens the report form, #actions jumps to suggested actions
 if (location.hash === '#missed') { $('#missBox').open = true; setTimeout(() => $('#missBox').scrollIntoView({ block: 'center' }), 50); }
 if (location.hash === '#actions') setTimeout(() => $('#actions').closest('.card').scrollIntoView({ block: 'start' }), 50);
+});
 </script>
 <script>
 (function(){
